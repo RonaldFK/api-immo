@@ -1,12 +1,18 @@
-{
+
+  {
     "env": {
     "es6": true,
     "node": true
     },
     "parserOptions": {
-    "ecmaVersion": 2022
+    "ecmaVersion": 2022,
+    "sourceType": "module"
     },
-    "extends": "eslint:recommended",
+    "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "prettier"
+    ],
     "rules": {
     "indent": ["error", 2],
     "semi": ["error", "always"],
@@ -14,7 +20,7 @@
     "no-trailing-spaces": "error",
     "eol-last": "error"
     },
-    "parserOptions": {
-    "sourceType": "module"
-    }
+    "plugins": [
+        "@typescript-eslint"
+      ]
     }
