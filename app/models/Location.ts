@@ -1,25 +1,27 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn } from "typeorm";
-import { Location } from "./Location";
+
+
 @Entity()
-export class Estate {
+export class Location {
     @PrimaryGeneratedColumn()
       id!: number;
     @Column()
-      name!: string;
+      street!: string;
 
     @Column()
-      price!:number;
+      city!:number;
 
     @Column()
-      type!:string;
+      country!:string;
+
+    @Column()
+      code!:number;
 
     @Column()
       created_at!: Date;
 
     @Column()
       updated_at!: Date;
-    @OneToOne(() => Location)
-    @JoinColumn()
-      location?: Location;
+
 
 }

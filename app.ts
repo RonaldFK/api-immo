@@ -1,6 +1,5 @@
 import express from 'express';
-import dotenv from 'dotenv';
-dotenv.config();
+import 'dotenv/config';
 import 'reflect-metadata';
 const app = express();
 import { dataSource } from './app/data/dataSource';

@@ -9,41 +9,39 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Estate = void 0;
+exports.Location = void 0;
 const typeorm_1 = require("typeorm");
-const Location_1 = require("./Location");
-let Estate = class Estate {
+let Location = class Location {
 };
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
-], Estate.prototype, "id", void 0);
+], Location.prototype, "id", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
-], Estate.prototype, "name", void 0);
+], Location.prototype, "street", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", Number)
-], Estate.prototype, "price", void 0);
+], Location.prototype, "city", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
-], Estate.prototype, "type", void 0);
+], Location.prototype, "country", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
+], Location.prototype, "code", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", Date)
-], Estate.prototype, "created_at", void 0);
+], Location.prototype, "created_at", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", Date)
-], Estate.prototype, "updated_at", void 0);
-__decorate([
-    (0, typeorm_1.OneToOne)(() => Location_1.Location),
-    (0, typeorm_1.JoinColumn)(),
-    __metadata("design:type", Location_1.Location)
-], Estate.prototype, "location", void 0);
-Estate = __decorate([
+], Location.prototype, "updated_at", void 0);
+Location = __decorate([
     (0, typeorm_1.Entity)()
-], Estate);
-exports.Estate = Estate;
+], Location);
+exports.Location = Location;

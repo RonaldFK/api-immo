@@ -13,14 +13,29 @@ exports.estateController = void 0;
 const dataSource_1 = require("../data/dataSource");
 const Estate_1 = require("../models/Estate");
 exports.estateController = {
-    getAllEstate(req, res) {
+    getAllEstate(_req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const estateList = yield dataSource_1.dataSource.manager.find(Estate_1.Estate);
-                res.status(200).json(estateList);
+                estateList.length > 0 ? res.status(200).json(estateList) : res.status(204).send();
             }
             catch (err) {
                 console.log(err);
+                res.status(500).json(err);
+            }
+        });
+    },
+    getOneEstate(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const id = req.params.id;
+            try {
+                const estate = yield dataSource_1.dataSource.getRepository(Estate_1.Estate).findBy({ id: Number(id) });
+                console.log(estate);
+                estate.length > 0 ? res.status(200).json(estate) : res.status(204).send();
+            }
+            catch (err) {
+                console.log(err);
+                res.status(500).json(err);
             }
         });
     }

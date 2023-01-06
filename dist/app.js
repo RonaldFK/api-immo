@@ -4,8 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const dotenv_1 = __importDefault(require("dotenv"));
-dotenv_1.default.config();
+require("dotenv/config");
 require("reflect-metadata");
 const app = (0, express_1.default)();
 const dataSource_1 = require("./app/data/dataSource");

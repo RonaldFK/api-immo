@@ -8,4 +8,7 @@ const express_1 = __importDefault(require("express"));
 const estateController_1 = require("../controllers/estateController");
 exports.router = express_1.default.Router();
 // GET, POST, PATCH , DELETE
+// ESTATE
 exports.router.get('/estate', estateController_1.estateController.getAllEstate);
+exports.router.get('/estate/:id', estateController_1.estateController.getOneEstate);
+// PARKING
