@@ -1,25 +1,41 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn } from "typeorm";
+
 import { Location } from "./Location";
+import { Parking } from "./Parking";
+
 @Entity()
 export class Estate {
     @PrimaryGeneratedColumn()
       id!: number;
-    @Column()
-      name!: string;
+  @Column()
+    name!: string;
 
-    @Column()
-      price!:number;
+  @Column()
+    price!:number;
 
-    @Column()
-      type!:string;
+  @Column()
+    type!:string;
 
-    @Column()
-      created_at!: Date;
+  @Column()
+    created_at!: Date;
 
-    @Column()
-      updated_at!: Date;
-    @OneToOne(() => Location)
-    @JoinColumn()
-      location?: Location;
+  @Column()
+    updated_at?: Date;
+
+
+  @Column()
+    location_id?:number;
+
+  @Column()
+    parking_id?:number;
+
+  @OneToOne(() => Location)
+  @JoinColumn({ name: "location_id" })
+    location?: Location;
+
+  @OneToOne(() => Parking)
+  @JoinColumn({ name: "parking_id" })
+    parking?: Parking;
+
 
 }

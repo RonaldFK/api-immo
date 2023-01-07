@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn } from "typeorm";
+
+import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
 
 
 @Entity()
@@ -22,6 +23,4 @@ export class Location {
 
     @Column()
       updated_at!: Date;
-
-
 }

@@ -1,6 +1,6 @@
 import express from 'express';
 import { estateController } from '../controllers/estateController';
-
+import { locationController } from '../controllers/locationController';
 export const router = express.Router();
 
 
@@ -9,4 +9,6 @@ export const router = express.Router();
 router.get('/estate',estateController.getAllEstate);
 router.get('/estate/:id',estateController.getOneEstate);
 
-// PARKING
+// LOCATION
+
+router.get('/location',locationController.getAllLocation);

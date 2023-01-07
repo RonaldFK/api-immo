@@ -9,34 +9,21 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.estateController = void 0;
+exports.locationController = void 0;
+const Location_1 = require("../models/Location");
 const dataSource_1 = require("../data/dataSource");
-const Estate_1 = require("../models/Estate");
-exports.estateController = {
-    getAllEstate(_req, res) {
+exports.locationController = {
+    getAllLocation(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const estateList = yield dataSource_1.dataSource.manager.find(Estate_1.Estate, { relations: { location: true, parking: true } });
-                estateList.length > 0 ? res.status(200).json(estateList) : res.status(204).send();
+                const locationList = yield dataSource_1.dataSource.manager.find(Location_1.Location);
+                locationList.length > 0 ? res.status(200).json(locationList) : res.status(204).send();
             }
             catch (err) {
                 console.log(err);
                 res.status(500).json(err);
             }
-        });
-    },
-    getOneEstate(req, res) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const id = req.params.id;
-            try {
-                const estate = yield dataSource_1.dataSource.getRepository(Estate_1.Estate).findBy({ id: Number(id) });
-                console.log(estate);
-                estate.length > 0 ? res.status(200).json(estate) : res.status(204).send();
-            }
-            catch (err) {
-                console.log(err);
-                res.status(500).json(err);
-            }
+            // res.status(200).json(locationList);
         });
     }
 };

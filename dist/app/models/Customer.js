@@ -9,55 +9,48 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Estate = void 0;
+exports.Customer = void 0;
 const typeorm_1 = require("typeorm");
-const Location_1 = require("./Location");
-const Parking_1 = require("./Parking");
-let Estate = class Estate {
+const Seller_1 = require("./Seller");
+let Customer = class Customer {
 };
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
-], Estate.prototype, "id", void 0);
+], Customer.prototype, "id", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
-], Estate.prototype, "name", void 0);
-__decorate([
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", Number)
-], Estate.prototype, "price", void 0);
+], Customer.prototype, "firstname", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
-], Estate.prototype, "type", void 0);
+], Customer.prototype, "lastname", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], Customer.prototype, "tel", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], Customer.prototype, "cash_or_credit", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", Date)
-], Estate.prototype, "created_at", void 0);
+], Customer.prototype, "date_of_selling", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", Date)
-], Estate.prototype, "updated_at", void 0);
+], Customer.prototype, "created_at", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
-    __metadata("design:type", Number)
-], Estate.prototype, "location_id", void 0);
+    __metadata("design:type", Date)
+], Customer.prototype, "updated_at", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", Number)
-], Estate.prototype, "parking_id", void 0);
-__decorate([
-    (0, typeorm_1.OneToOne)(() => Location_1.Location),
-    (0, typeorm_1.JoinColumn)({ name: "location_id" }),
-    __metadata("design:type", Location_1.Location)
-], Estate.prototype, "location", void 0);
-__decorate([
-    (0, typeorm_1.OneToOne)(() => Parking_1.Parking),
-    (0, typeorm_1.JoinColumn)({ name: "parking_id" }),
-    __metadata("design:type", Parking_1.Parking)
-], Estate.prototype, "parking", void 0);
-Estate = __decorate([
+    (0, typeorm_1.ManyToOne)(() => Seller_1.Seller, (seller) => seller.id),
+    __metadata("design:type", Seller_1.Seller)
+], Customer.prototype, "seller", void 0);
+Customer = __decorate([
     (0, typeorm_1.Entity)()
-], Estate);
-exports.Estate = Estate;
+], Customer);
+exports.Customer = Customer;

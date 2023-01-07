@@ -5,7 +5,7 @@ import { Request,Response } from 'express';
 export const estateController = {
   async getAllEstate (_req:Request,res:Response) {
     try{
-      const estateList = await dataSource.manager.find(Estate);
+      const estateList = await dataSource.manager.find(Estate,{relations:{location:true,parking:true}});
       estateList.length >0 ? res.status(200).json(estateList) : res.status(204).send();
 
     } catch(err){
