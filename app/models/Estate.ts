@@ -1,9 +1,10 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn, Unique } from "typeorm";
 
 import { Location } from "./Location";
 import { Parking } from "./Parking";
 
 @Entity()
+@Unique(["name"])
 export class Estate {
     @PrimaryGeneratedColumn()
       id!: number;

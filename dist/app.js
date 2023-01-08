@@ -9,6 +9,7 @@ require("reflect-metadata");
 const app = (0, express_1.default)();
 const dataSource_1 = require("./app/data/dataSource");
 const router_1 = require("./app/routers/router");
+// Connecion à la source de donnée pour TypeOrm
 dataSource_1.dataSource.initialize()
     .then(() => {
     console.log("Data Source has been initialized!");
@@ -16,8 +17,9 @@ dataSource_1.dataSource.initialize()
     .catch((err) => {
     console.error("Error during Data Source initialization", err);
 });
-const port = process.env.PORT || 3000;
+app.use(express_1.default.json());
 app.use(router_1.router);
+const port = process.env.PORT || 3000;
 app.listen(port, () => {
     console.log(`server launched on port : ${port}`);
 });
