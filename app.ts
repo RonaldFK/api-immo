@@ -1,9 +1,11 @@
 import express, { urlencoded } from 'express';
 import 'dotenv/config';
 import 'reflect-metadata';
-const app = express();
 import { dataSource } from './app/data/dataSource';
 import {router} from './app/routers/router';
+
+const app = express();
+const port = process.env.PORT || 3000;
 
 // Connecion à la source de donnée pour TypeOrm
 dataSource.initialize()
@@ -16,10 +18,8 @@ dataSource.initialize()
 
 
 app.use(express.json());
-
 app.use(router);
 
-const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`server launched on port : ${port}`);
 });

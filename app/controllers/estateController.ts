@@ -23,10 +23,11 @@ export const estateController = {
 
     const id = req.params.id;
 
-    const regexNumber = /^([0-9])$/g;
+    const regexNumber = /^[0-9]*$/g;
     const testRegexNumber = regexNumber.test(id);
 
-    if (testRegexNumber === false) {return res.status(400).json({Error: 'Id incorrecte, merci de vérifier celui-ci'});}
+    // Vérification syntaxique du type pour l'id
+    if (testRegexNumber === false) {return res.status(400).json({Error: 'Id incorrect, merci de vérifier celui-ci'});}
 
     try{
       const estate = await dataSource.getRepository(Estate).find({where:{id:Number(id)},relations:{location:true,parking:true}});
@@ -45,7 +46,7 @@ export const estateController = {
   async getEstateByType (req:Request,res:Response){
     const type = req.params.type;
 
-    const regexString = /^([a-zA-Z]{2,})$/g;
+    const regexString = /^([a-zA-Z]{3,})$/g;
     const testRegex = regexString.test(type);
 
     // Vérification syntaxique du type demandé
@@ -64,7 +65,7 @@ export const estateController = {
    * @param res
    */
   async createEstate(req:Request,res:Response){
-    const {name,price,type} = req.body;
+    const {name,price,type,location_id,parking_id} = req.body;
     if (name === undefined || price === undefined || type === undefined){res.status(400).json({Error:'Formulaire non complet'});}
 
     try{
@@ -75,7 +76,10 @@ export const estateController = {
         .values(
           { name: name,
             price: price ,
-            type:type}
+            type:type,
+            location_id:location_id,
+            parking_id:parking_id
+          }
         )
         .execute();
 
@@ -86,6 +90,67 @@ export const estateController = {
       // Controle du code d'erreur, puis renvoie d'un message clair à l'utilisateur et detail erreur
       err.driverError.code === '23505' && res.status(500).json({DétailError :err.driverError.detail,Message:'Violation de contrainte, donnée existante'});
 
+    }
+  },
+  /**
+   *
+   * @param req // Récupération de l'id du bien à mettre à jour plus info à insérer
+   * @param res
+   */
+  async updateEstate(req:Request,res:Response){
+    const id = req.params.id;
+    const {name,price,type,location_id,parking_id} = req.body;
+
+    const regexNumber = /^[0-9]*$/g;
+    const testRegexNumber = regexNumber.test(id);
+    console.log(testRegexNumber);
+
+    if(testRegexNumber === false){return res.status(400).json({Error: 'Id incorrect, merci de vérifier celui-ci'});}
+
+    try{
+      await dataSource
+        .createQueryBuilder()
+        .update(Estate)
+        .set({ name: name,
+          price: price ,
+          type:type,
+          location_id:location_id,
+          parking_id:parking_id
+        })
+        .where( { id: id })
+        .execute();
+
+      const returnResult = await dataSource.getRepository(Estate).find({where:{id:Number(id)}});
+      returnResult.length>0 ? res.status(200).json(returnResult) : res.status(204).send();
+
+    } catch(err){console.log(err);
+      res.status(500).json(err);
+    }
+  },
+  async deleteEstate(req:Request,res:Response){
+    const id = req.params.id;
+    const {name,price,type,location_id,parking_id} = req.body;
+
+    const regexNumber = /^[0-9]*$/g;
+    const testRegexNumber = regexNumber.test(id);
+    console.log(testRegexNumber);
+
+    if(testRegexNumber === false){return res.status(400).json({Error: 'Id incorrect, merci de vérifier celui-ci'});}
+
+    try{
+      const dataToDelete = await dataSource
+        .createQueryBuilder()
+        .delete()
+        .from(Estate)
+        .where({ id: Number(id) })
+        .execute();
+
+      dataToDelete.affected === 1 ? res.status(200).json({Information: 'Supprimé avec succès'}) : res.json({Information: 'Aucun bien de correspond'});
+      // const returnResult = await dataSource.getRepository(Estate).find({where:{id:Number(id)}});
+      // returnResult.length>0 ? res.status(200).json(returnResult) : res.status(204).send();
+
+    } catch(err){console.log(err);
+      res.status(500).json(err);
     }
   }
 };

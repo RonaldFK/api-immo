@@ -14,5 +14,7 @@ exports.router.get('/estate', estateController_1.estateController.getAllEstate);
 exports.router.get('/estate/:id', estateController_1.estateController.getOneEstateById);
 exports.router.get('/estate/type/:type', estateController_1.estateController.getEstateByType);
 exports.router.post('/estate', estateController_1.estateController.createEstate);
+exports.router.patch('/estate/:id', estateController_1.estateController.updateEstate);
+exports.router.delete('/estate/:id', estateController_1.estateController.deleteEstate);
 // LOCATION
 exports.router.get('/location', locationController_1.locationController.getAllLocation);
