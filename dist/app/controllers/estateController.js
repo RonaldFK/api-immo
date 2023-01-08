@@ -33,9 +33,13 @@ exports.estateController = {
     getOneEstateById(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const id = req.params.id;
+            const regexNumber = /^([0-9])$/g;
+            const testRegexNumber = regexNumber.test(id);
+            if (testRegexNumber === false) {
+                return res.status(400).json({ Error: 'Id incorrecte, merci de vérifier celui-ci' });
+            }
             try {
                 const estate = yield dataSource_1.dataSource.getRepository(Estate_1.Estate).find({ where: { id: Number(id) }, relations: { location: true, parking: true } });
-                console.log(estate);
                 estate.length > 0 ? res.status(200).json(estate) : res.status(204).send();
             }
             catch (err) {
@@ -52,8 +56,8 @@ exports.estateController = {
     getEstateByType(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const type = req.params.type;
-            const regex = /^([a-zA-Z]{2,})$/g;
-            const testRegex = regex.test(type);
+            const regexString = /^([a-zA-Z]{2,})$/g;
+            const testRegex = regexString.test(type);
             // Vérification syntaxique du type demandé
             if (testRegex === false) {
                 return res.status(400).json({ Error: 'Recherche erronée, vérifier le type demandé' });
@@ -63,7 +67,6 @@ exports.estateController = {
                 estate.length > 0 ? res.status(200).json(estate) : res.status(204).send();
             }
             catch (err) {
-                console.log('ici');
                 res.status(500).json(err);
             }
         });

@@ -22,15 +22,18 @@ export const estateController = {
   async getOneEstateById (req:Request,res:Response){
 
     const id = req.params.id;
+
+    const regexNumber = /^([0-9])$/g;
+    const testRegexNumber = regexNumber.test(id);
+
+    if (testRegexNumber === false) {return res.status(400).json({Error: 'Id incorrecte, merci de vérifier celui-ci'});}
+
     try{
       const estate = await dataSource.getRepository(Estate).find({where:{id:Number(id)},relations:{location:true,parking:true}});
-      console.log(estate);
-
       estate.length > 0 ? res.status(200).json(estate) : res.status(204).send();
 
     } catch(err){
       console.log(err);
-
       res.status(500).json(err);
     }
   },
@@ -42,8 +45,8 @@ export const estateController = {
   async getEstateByType (req:Request,res:Response){
     const type = req.params.type;
 
-    const regex = /^([a-zA-Z]{2,})$/g;
-    const testRegex = regex.test(type);
+    const regexString = /^([a-zA-Z]{2,})$/g;
+    const testRegex = regexString.test(type);
 
     // Vérification syntaxique du type demandé
     if (testRegex === false) {return res.status(400).json({Error: 'Recherche erronée, vérifier le type demandé'});}
@@ -52,8 +55,6 @@ export const estateController = {
       estate.length > 0 ? res.status(200).json(estate) : res.status(204).send();
 
     } catch(err){
-      console.log('ici');
-
       res.status(500).json(err);
     }
   },
