@@ -6,6 +6,10 @@ import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
 export class Location {
     @PrimaryGeneratedColumn()
       id!: number;
+
+    @Column()
+      num!:number;
+
     @Column()
       street!: string;
 

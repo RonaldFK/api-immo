@@ -2,8 +2,8 @@ import express from 'express';
 import { estateController } from '../controllers/estateController';
 export const router = express.Router();
 import { locationController } from '../controllers/locationController';
-import {controlSyntaxMiddleware} from '../middlewares/controlIdMiddleware';
-
+import {controlSyntaxMiddleware} from '../middlewares/controlSyntaxMiddleware';
+import {controlUniqData} from '../middlewares/controlUniqData';
 
 // GET, POST, PATCH , DELETE
 // ESTATE
@@ -17,3 +17,4 @@ router.delete('/estate/:id',controlSyntaxMiddleware.syntaxIdControl,estateContro
 // LOCATION
 router.get('/location',locationController.getAllLocation);
 router.get('/location/:id',controlSyntaxMiddleware.syntaxIdControl,locationController.getOneLocationById);
+router.post('/location',controlUniqData.uniqueDataControl,locationController.createLocation);

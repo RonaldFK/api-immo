@@ -18,6 +18,13 @@ export const controlSyntaxMiddleware = {
     if(testRegexNumber === false){return res.status(400).json({Error: 'Id incorrect, merci de vérifier celui-ci'});}
     next();
   },
+  /**
+   *
+   * @param req // Controle de la syntaxe du type avant traitement de la demande
+   * @param res
+   * @param next
+   * @returns
+   */
   syntaxTypeControl(req:Request, res:Response, next:NextFunction){
     const type = req.params.type;
 

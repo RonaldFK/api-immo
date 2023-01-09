@@ -8,15 +8,17 @@ const express_1 = __importDefault(require("express"));
 const estateController_1 = require("../controllers/estateController");
 exports.router = express_1.default.Router();
 const locationController_1 = require("../controllers/locationController");
-const controlIdMiddleware_1 = require("../middlewares/controlIdMiddleware");
+const controlSyntaxMiddleware_1 = require("../middlewares/controlSyntaxMiddleware");
+const controlUniqData_1 = require("../middlewares/controlUniqData");
 // GET, POST, PATCH , DELETE
 // ESTATE
 exports.router.get('/estate', estateController_1.estateController.getAllEstate);
-exports.router.get('/estate/:id', controlIdMiddleware_1.controlSyntaxMiddleware.syntaxIdControl, estateController_1.estateController.getOneEstateById);
-exports.router.get('/estate/type/:type', controlIdMiddleware_1.controlSyntaxMiddleware.syntaxTypeControl, estateController_1.estateController.getEstateByType);
+exports.router.get('/estate/:id', controlSyntaxMiddleware_1.controlSyntaxMiddleware.syntaxIdControl, estateController_1.estateController.getOneEstateById);
+exports.router.get('/estate/type/:type', controlSyntaxMiddleware_1.controlSyntaxMiddleware.syntaxTypeControl, estateController_1.estateController.getEstateByType);
 exports.router.post('/estate', estateController_1.estateController.createEstate);
-exports.router.patch('/estate/:id', controlIdMiddleware_1.controlSyntaxMiddleware.syntaxIdControl, estateController_1.estateController.updateOneEstate);
-exports.router.delete('/estate/:id', controlIdMiddleware_1.controlSyntaxMiddleware.syntaxIdControl, estateController_1.estateController.deleteOneEstate);
+exports.router.patch('/estate/:id', controlSyntaxMiddleware_1.controlSyntaxMiddleware.syntaxIdControl, estateController_1.estateController.updateOneEstate);
+exports.router.delete('/estate/:id', controlSyntaxMiddleware_1.controlSyntaxMiddleware.syntaxIdControl, estateController_1.estateController.deleteOneEstate);
 // LOCATION
 exports.router.get('/location', locationController_1.locationController.getAllLocation);
-exports.router.get('/location/:id', controlIdMiddleware_1.controlSyntaxMiddleware.syntaxIdControl, locationController_1.locationController.getOneLocationById);
+exports.router.get('/location/:id', controlSyntaxMiddleware_1.controlSyntaxMiddleware.syntaxIdControl, locationController_1.locationController.getOneLocationById);
+exports.router.post('/location', controlUniqData_1.controlUniqData.uniqueDataControl, locationController_1.locationController.createLocation);
