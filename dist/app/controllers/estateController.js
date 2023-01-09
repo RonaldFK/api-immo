@@ -33,12 +33,6 @@ exports.estateController = {
     getOneEstateById(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const id = req.params.id;
-            const regexNumber = /^[0-9]*$/g;
-            const testRegexNumber = regexNumber.test(id);
-            // Vérification syntaxique du type pour l'id
-            if (testRegexNumber === false) {
-                return res.status(400).json({ Error: 'Id incorrect, merci de vérifier celui-ci' });
-            }
             try {
                 const estate = yield dataSource_1.dataSource.getRepository(Estate_1.Estate).find({ where: { id: Number(id) }, relations: { location: true, parking: true } });
                 estate.length > 0 ? res.status(200).json(estate) : res.status(204).send();
@@ -57,12 +51,6 @@ exports.estateController = {
     getEstateByType(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const type = req.params.type;
-            const regexString = /^([a-zA-Z]{3,})$/g;
-            const testRegex = regexString.test(type);
-            // Vérification syntaxique du type demandé
-            if (testRegex === false) {
-                return res.status(400).json({ Error: 'Recherche erronée, vérifier le type demandé' });
-            }
             try {
                 const estate = yield dataSource_1.dataSource.getRepository(Estate_1.Estate).find({ where: { type: `${type}` } });
                 estate.length > 0 ? res.status(200).json(estate) : res.status(204).send();
@@ -109,16 +97,10 @@ exports.estateController = {
      * @param req // Récupération de l'id du bien à mettre à jour plus info à insérer
      * @param res
      */
-    updateEstate(req, res) {
+    updateOneEstate(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const id = req.params.id;
             const { name, price, type, location_id, parking_id } = req.body;
-            const regexNumber = /^[0-9]*$/g;
-            const testRegexNumber = regexNumber.test(id);
-            console.log(testRegexNumber);
-            if (testRegexNumber === false) {
-                return res.status(400).json({ Error: 'Id incorrect, merci de vérifier celui-ci' });
-            }
             try {
                 yield dataSource_1.dataSource
                     .createQueryBuilder()
@@ -140,16 +122,9 @@ exports.estateController = {
             }
         });
     },
-    deleteEstate(req, res) {
+    deleteOneEstate(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const id = req.params.id;
-            const { name, price, type, location_id, parking_id } = req.body;
-            const regexNumber = /^[0-9]*$/g;
-            const testRegexNumber = regexNumber.test(id);
-            console.log(testRegexNumber);
-            if (testRegexNumber === false) {
-                return res.status(400).json({ Error: 'Id incorrect, merci de vérifier celui-ci' });
-            }
             try {
                 const dataToDelete = yield dataSource_1.dataSource
                     .createQueryBuilder()
@@ -158,8 +133,6 @@ exports.estateController = {
                     .where({ id: Number(id) })
                     .execute();
                 dataToDelete.affected === 1 ? res.status(200).json({ Information: 'Supprimé avec succès' }) : res.json({ Information: 'Aucun bien de correspond' });
-                // const returnResult = await dataSource.getRepository(Estate).find({where:{id:Number(id)}});
-                // returnResult.length>0 ? res.status(200).json(returnResult) : res.status(204).send();
             }
             catch (err) {
                 console.log(err);

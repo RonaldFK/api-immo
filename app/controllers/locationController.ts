@@ -12,7 +12,14 @@ export const locationController = {
     } catch(err){console.log(err);
       res.status(500).json(err);
     }
+  },
+  async getOneLocationById(req:Request,res:Response){
+    const id = req.params.id;
 
-    // res.status(200).json(locationList);
+    const location = await dataSource.getRepository(Location).find({where:{id:Number(id)}});
+
+    try{
+      res.status(200).json(location);
+    } catch(err){res.status(500).json(err);}
   }
 };

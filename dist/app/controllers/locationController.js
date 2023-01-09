@@ -23,7 +23,18 @@ exports.locationController = {
                 console.log(err);
                 res.status(500).json(err);
             }
-            // res.status(200).json(locationList);
+        });
+    },
+    getOneLocationById(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const id = req.params.id;
+            const location = yield dataSource_1.dataSource.getRepository(Location_1.Location).find({ where: { id: Number(id) } });
+            try {
+                res.status(200).json(location);
+            }
+            catch (err) {
+                res.status(500).json(err);
+            }
         });
     }
 };
