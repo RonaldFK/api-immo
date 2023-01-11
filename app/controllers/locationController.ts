@@ -4,6 +4,11 @@ import { dataSource } from "../data/dataSource";
 
 
 export const locationController = {
+  /**
+   * Récupère la liste des localisations
+   * @param req
+   * @param res
+   */
   async getAllLocation (req:Request,res:Response) {
     try{
       const locationList = await dataSource.manager.find(Location);
@@ -13,6 +18,11 @@ export const locationController = {
       res.status(500).json(err);
     }
   },
+  /**
+   * Récupère une localisation depuis l'ID
+   * @param req
+   * @param res
+   */
   async getOneLocationById (req:Request,res:Response){
     const id = req.params.id;
 
@@ -22,19 +32,24 @@ export const locationController = {
       location.length>0 ? res.status(200).json(location) : res.status(204).send();
     } catch(err){res.status(500).json(err);}
   },
+  /**
+   * Création d'une nouvelle localisation
+   * @param req
+   * @param res
+   */
   async createLocation (req:Request,res:Response){
-    const {num,street,city,country,code} = req.body;
+    const dataRequest:typeLocation = req.body;
 
     const dataToInsert = await dataSource
       .createQueryBuilder()
       .insert()
       .into(Location)
       .values(
-        { num:num,
-          street: street,
-          city: city ,
-          country:country,
-          code:code
+        { num:dataRequest.num,
+          street: dataRequest.street,
+          city: dataRequest.city ,
+          country:dataRequest.country,
+          code:dataRequest.code
         }
       )
       .execute();

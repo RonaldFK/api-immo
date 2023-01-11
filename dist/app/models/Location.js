@@ -27,7 +27,7 @@ __decorate([
 ], Location.prototype, "street", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
-    __metadata("design:type", Number)
+    __metadata("design:type", String)
 ], Location.prototype, "city", void 0);
 __decorate([
     (0, typeorm_1.Column)(),

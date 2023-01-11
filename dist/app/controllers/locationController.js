@@ -13,6 +13,11 @@ exports.locationController = void 0;
 const Location_1 = require("../models/Location");
 const dataSource_1 = require("../data/dataSource");
 exports.locationController = {
+    /**
+     * Récupère la liste des localisations
+     * @param req
+     * @param res
+     */
     getAllLocation(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -25,6 +30,11 @@ exports.locationController = {
             }
         });
     },
+    /**
+     * Récupère une localisation depuis l'ID
+     * @param req
+     * @param res
+     */
     getOneLocationById(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const id = req.params.id;
@@ -37,18 +47,23 @@ exports.locationController = {
             }
         });
     },
+    /**
+     * Création d'une nouvelle localisation
+     * @param req
+     * @param res
+     */
     createLocation(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { num, street, city, country, code } = req.body;
+            const dataRequest = req.body;
             const dataToInsert = yield dataSource_1.dataSource
                 .createQueryBuilder()
                 .insert()
                 .into(Location_1.Location)
-                .values({ num: num,
-                street: street,
-                city: city,
-                country: country,
-                code: code
+                .values({ num: dataRequest.num,
+                street: dataRequest.street,
+                city: dataRequest.city,
+                country: dataRequest.country,
+                code: dataRequest.code
             })
                 .execute();
             const returnResult = yield dataSource_1.dataSource.getRepository(Location_1.Location).find({ where: { id: dataToInsert.raw[0].id } });

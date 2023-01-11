@@ -14,7 +14,7 @@ export class Location {
       street!: string;
 
     @Column()
-      city!:number;
+      city!:string;
 
     @Column()
       country!:string;
