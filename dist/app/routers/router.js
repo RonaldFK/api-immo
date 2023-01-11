@@ -10,7 +10,6 @@ exports.router = express_1.default.Router();
 const locationController_1 = require("../controllers/locationController");
 const controlSyntaxMiddleware_1 = require("../middlewares/controlSyntaxMiddleware");
 const controlUniqData_1 = require("../middlewares/controlUniqData");
-// GET, POST, PATCH , DELETE
 // ESTATE
 exports.router.get('/estate', estateController_1.estateController.getAllEstate);
 exports.router.get('/estate/:id', controlSyntaxMiddleware_1.controlSyntaxMiddleware.syntaxIdControl, estateController_1.estateController.getOneEstateById);
@@ -22,3 +21,5 @@ exports.router.delete('/estate/:id', controlSyntaxMiddleware_1.controlSyntaxMidd
 exports.router.get('/location', locationController_1.locationController.getAllLocation);
 exports.router.get('/location/:id', controlSyntaxMiddleware_1.controlSyntaxMiddleware.syntaxIdControl, locationController_1.locationController.getOneLocationById);
 exports.router.post('/location', controlUniqData_1.controlUniqData.uniqueDataControl, locationController_1.locationController.createLocation);
+// CUSTOMER
+exports.router.get('/customer');

@@ -5,7 +5,7 @@ import { locationController } from '../controllers/locationController';
 import {controlSyntaxMiddleware} from '../middlewares/controlSyntaxMiddleware';
 import {controlUniqData} from '../middlewares/controlUniqData';
 
-// GET, POST, PATCH , DELETE
+
 // ESTATE
 router.get('/estate',estateController.getAllEstate);
 router.get('/estate/:id',controlSyntaxMiddleware.syntaxIdControl,estateController.getOneEstateById);
@@ -18,3 +18,7 @@ router.delete('/estate/:id',controlSyntaxMiddleware.syntaxIdControl,estateContro
 router.get('/location',locationController.getAllLocation);
 router.get('/location/:id',controlSyntaxMiddleware.syntaxIdControl,locationController.getOneLocationById);
 router.post('/location',controlUniqData.uniqueDataControl,locationController.createLocation);
+
+// CUSTOMER
+
+router.get('/customer');

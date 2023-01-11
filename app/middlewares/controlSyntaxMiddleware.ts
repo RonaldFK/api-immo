@@ -3,8 +3,8 @@ import { Request,Response,NextFunction } from "express";
 
 export const controlSyntaxMiddleware = {
   /**
-     *
-     * @param req // Controle de la syntax de l'ID avant traitement de la demande
+     * Controle de la syntax de l'ID avant traitement de la demande
+     * @param req
      * @param res
      * @returns
      */
@@ -19,8 +19,8 @@ export const controlSyntaxMiddleware = {
     next();
   },
   /**
-   *
-   * @param req // Controle de la syntaxe du type avant traitement de la demande
+   * Controle de la syntaxe du type avant traitement de la demande
+   * @param req
    * @param res
    * @param next
    * @returns

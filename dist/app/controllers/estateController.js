@@ -13,6 +13,11 @@ exports.estateController = void 0;
 const dataSource_1 = require("../data/dataSource");
 const Estate_1 = require("../models/Estate");
 exports.estateController = {
+    /**
+     * Récupère la liste complète des Biens
+     * @param _req
+     * @param res
+     */
     getAllEstate(_req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -26,8 +31,8 @@ exports.estateController = {
         });
     },
     /**
-     *
-     * @param req // Récupère l'id du biens recherché
+     * Récupère les informations d'un bien en particulier selon l'ID founie.
+     * @param req
      * @param res
      */
     getOneEstateById(req, res) {
@@ -44,8 +49,8 @@ exports.estateController = {
         });
     },
     /**
-     *
-     * @param req // Récupère le type de biens recherché
+     * Récupère la liste des biens qui corresponde à un type donné.
+     * @param req
      * @param res
      */
     getEstateByType(req, res) {
@@ -61,14 +66,16 @@ exports.estateController = {
         });
     },
     /**
-     *
-     * @param req // Récupère les infos du formulaire pour la création d'un bien
+     * Création d'un nouveau bien
+     * @param req
      * @param res
      */
     createEstate(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { name, price, type, location_id, parking_id } = req.body;
-            if (name === undefined || price === undefined || type === undefined) {
+            const dataRequest = req.body;
+            if (dataRequest.name === undefined
+                || dataRequest.price === undefined
+                || dataRequest.type === undefined) {
                 res.status(400).json({ Error: 'Formulaire non complet' });
             }
             try {
@@ -76,11 +83,11 @@ exports.estateController = {
                     .createQueryBuilder()
                     .insert()
                     .into(Estate_1.Estate)
-                    .values({ name: name,
-                    price: price,
-                    type: type,
-                    location_id: location_id,
-                    parking_id: parking_id
+                    .values({ name: dataRequest.name,
+                    price: dataRequest.price,
+                    type: dataRequest.type,
+                    location_id: dataRequest.location_id,
+                    parking_id: dataRequest.parking_id
                 })
                     .execute();
                 const returnResult = yield dataSource_1.dataSource.getRepository(Estate_1.Estate).find({ where: { id: dataToInsert.raw[0].id } });
@@ -94,23 +101,23 @@ exports.estateController = {
         });
     },
     /**
-     *
-     * @param req // Récupération de l'id du bien à mettre à jour plus info à insérer
+     * Mettre à jour les informations d'un bien
+     * @param req
      * @param res
      */
     updateOneEstate(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const id = req.params.id;
-            const { name, price, type, location_id, parking_id } = req.body;
+            const dataRequest = req.body;
             try {
                 yield dataSource_1.dataSource
                     .createQueryBuilder()
                     .update(Estate_1.Estate)
-                    .set({ name: name,
-                    price: price,
-                    type: type,
-                    location_id: location_id,
-                    parking_id: parking_id
+                    .set({ name: dataRequest.name,
+                    price: dataRequest.price,
+                    type: dataRequest.type,
+                    location_id: dataRequest.location_id,
+                    parking_id: dataRequest.parking_id
                 })
                     .where({ id: id })
                     .execute();
@@ -123,6 +130,11 @@ exports.estateController = {
             }
         });
     },
+    /**
+     * Suppression d'un bien
+     * @param req
+     * @param res
+     */
     deleteOneEstate(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const id = req.params.id;
