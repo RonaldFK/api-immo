@@ -8,6 +8,7 @@ require("dotenv/config");
 require("reflect-metadata");
 const dataSource_1 = require("./app/data/dataSource");
 const router_1 = require("./app/routers/router");
+const routerAuth_1 = require("./app/routers/routerAuth");
 const app = (0, express_1.default)();
 const port = process.env.PORT || 3000;
 // Connecion à la source de donnée pour TypeOrm
@@ -19,7 +20,8 @@ dataSource_1.dataSource.initialize()
     console.error("Error during Data Source initialization", err);
 });
 app.use(express_1.default.json());
-app.use(router_1.router);
+app.use('/login', routerAuth_1.routerAuth);
+app.use('/', router_1.router);
 app.listen(port, () => {
     console.log(`server launched on port : ${port}`);
 });
