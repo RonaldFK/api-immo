@@ -35,7 +35,7 @@ __decorate([
     __metadata("design:type", Date)
 ], Parking.prototype, "updated_at", void 0);
 __decorate([
-    (0, typeorm_1.OneToOne)(() => Location_1.Location),
+    (0, typeorm_1.OneToOne)(() => Location_1.Location, { cascade: true }),
     (0, typeorm_1.JoinColumn)({ name: "location_id" }),
     __metadata("design:type", Location_1.Location)
 ], Parking.prototype, "location", void 0);

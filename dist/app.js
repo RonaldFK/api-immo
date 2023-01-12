@@ -20,8 +20,8 @@ dataSource_1.dataSource.initialize()
     console.error("Error during Data Source initialization", err);
 });
 app.use(express_1.default.json());
-app.use('/login', routerAuth_1.routerAuth);
-app.use('/', router_1.router);
+app.use('/', router_1.mainRouter);
+app.use('/login', routerAuth_1.authRouter);
 app.listen(port, () => {
     console.log(`server launched on port : ${port}`);
 });

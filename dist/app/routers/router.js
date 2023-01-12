@@ -3,26 +3,35 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.router = void 0;
+exports.mainRouter = void 0;
 const express_1 = __importDefault(require("express"));
 const estateController_1 = require("../controllers/estateController");
-exports.router = express_1.default.Router();
+exports.mainRouter = express_1.default.Router();
 const locationController_1 = require("../controllers/locationController");
 const controlSyntaxMiddleware_1 = require("../middlewares/controlSyntaxMiddleware");
 const controlUniqData_1 = require("../middlewares/controlUniqData");
 const customerController_1 = require("../controllers/customerController");
+const sellerController_1 = require("../controllers/sellerController");
 // ESTATE
-exports.router.get('/estate', estateController_1.estateController.getAllEstate);
-exports.router.get('/estate/:id', controlSyntaxMiddleware_1.controlSyntaxMiddleware.syntaxIdControl, estateController_1.estateController.getOneEstateById);
-exports.router.get('/estate/type/:type', controlSyntaxMiddleware_1.controlSyntaxMiddleware.syntaxTypeControl, estateController_1.estateController.getEstateByType);
-exports.router.post('/estate', estateController_1.estateController.createEstate);
-exports.router.patch('/estate/:id', controlSyntaxMiddleware_1.controlSyntaxMiddleware.syntaxIdControl, estateController_1.estateController.updateOneEstate);
-exports.router.delete('/estate/:id', controlSyntaxMiddleware_1.controlSyntaxMiddleware.syntaxIdControl, estateController_1.estateController.deleteOneEstate);
+exports.mainRouter.get('/estate', estateController_1.estateController.getAllEstate);
+exports.mainRouter.get('/estate/:id', controlSyntaxMiddleware_1.controlSyntaxMiddleware.syntaxIdControl, estateController_1.estateController.getOneEstateById);
+exports.mainRouter.get('/estate/type/:type', controlSyntaxMiddleware_1.controlSyntaxMiddleware.syntaxTypeControl, estateController_1.estateController.getEstateByType);
+exports.mainRouter.post('/estate', controlUniqData_1.controlUniqData.uniqueDataControlEstate, estateController_1.estateController.createEstate);
+exports.mainRouter.patch('/estate/:id', controlSyntaxMiddleware_1.controlSyntaxMiddleware.syntaxIdControl, estateController_1.estateController.updateOneEstate);
+exports.mainRouter.delete('/estate/:id', controlSyntaxMiddleware_1.controlSyntaxMiddleware.syntaxIdControl, estateController_1.estateController.deleteOneEstate);
 // LOCATION
-exports.router.get('/location', locationController_1.locationController.getAllLocation);
-exports.router.get('/location/:id', controlSyntaxMiddleware_1.controlSyntaxMiddleware.syntaxIdControl, locationController_1.locationController.getOneLocationById);
-exports.router.post('/location', controlUniqData_1.controlUniqData.uniqueDataControl, locationController_1.locationController.createLocation);
+exports.mainRouter.get('/location', locationController_1.locationController.getAllLocation);
+exports.mainRouter.get('/location/:id', controlSyntaxMiddleware_1.controlSyntaxMiddleware.syntaxIdControl, locationController_1.locationController.getOneLocationById);
+exports.mainRouter.post('/location', controlUniqData_1.controlUniqData.uniqueDataControlLocation, locationController_1.locationController.createLocation);
+exports.mainRouter.patch('/location/:id', controlSyntaxMiddleware_1.controlSyntaxMiddleware.syntaxIdControl, locationController_1.locationController.updateOneLocation);
+// non pertinent une route pour la supression d'une localisation.
+// Il est préférable de passer par un cascade lors de la supression d'un bien en lien avec cette localisation
+// mainRouter.delete('/location/:id',
+//   controlSyntaxMiddleware.syntaxIdControl,
+//   locationController.deleteOneLocation);
 // CUSTOMER
-exports.router.get('/customer', customerController_1.customerController.getAllCustomer);
-exports.router.get('/customer/:id', customerController_1.customerController.getOneController);
+exports.mainRouter.get('/customer', customerController_1.customerController.getAllCustomer);
+exports.mainRouter.get('/customer/:id', controlSyntaxMiddleware_1.controlSyntaxMiddleware.syntaxIdControl, customerController_1.customerController.getOneCustomer);
+exports.mainRouter.post('/customer', controlUniqData_1.controlUniqData.uniqueDataControlCustomer, customerController_1.customerController.createCustomer);
 // SELLER
+exports.mainRouter.get('/seller', sellerController_1.sellerController.getAllSeller);

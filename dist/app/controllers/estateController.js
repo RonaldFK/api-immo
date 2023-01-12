@@ -94,9 +94,7 @@ exports.estateController = {
                 res.status(200).json(returnResult);
             }
             catch (err) {
-                // Si la donnée existe déjà, puis renvoie d'un message clair à l'utilisateur et detail erreur
-                // le code 23505 est celui renvoyer si violation de contrainte
-                err.driverError.code === '23505' && res.status(500).json({ DétailError: err.driverError.detail, Message: 'Violation de contrainte, donnée existante' });
+                console.log(err);
             }
         });
     },

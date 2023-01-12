@@ -69,5 +69,49 @@ exports.locationController = {
             const returnResult = yield dataSource_1.dataSource.getRepository(Location_1.Location).find({ where: { id: dataToInsert.raw[0].id } });
             res.status(200).json(returnResult);
         });
+    },
+    updateOneLocation(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const id = req.params.id;
+            const dataRequest = req.body;
+            try {
+                yield dataSource_1.dataSource
+                    .createQueryBuilder()
+                    .update(Location_1.Location)
+                    .set({ num: dataRequest.num,
+                    street: dataRequest.street,
+                    city: dataRequest.city,
+                    country: dataRequest.country,
+                    code: dataRequest.code
+                })
+                    .where({ id: id })
+                    .execute();
+                const returnResult = yield dataSource_1.dataSource.getRepository(Location_1.Location).find({ where: { id: Number(id) } });
+                console.table(returnResult);
+                returnResult.length > 0 ? res.status(200).json(returnResult) : res.status(204).send();
+            }
+            catch (err) {
+                console.log(err);
+                res.status(500).json(err);
+            }
+        });
+    },
+    deleteOneLocation(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const id = req.params.id;
+            try {
+                const dataToDelete = yield dataSource_1.dataSource
+                    .createQueryBuilder()
+                    .delete()
+                    .from(Location_1.Location)
+                    .where({ id: Number(id) })
+                    .execute();
+                dataToDelete.affected === 1 ? res.status(200).json({ Information: 'Supprimé avec succès' }) : res.json({ Information: 'Aucun bien de correspond' });
+            }
+            catch (err) {
+                console.log(err);
+                res.status(500).json(err);
+            }
+        });
     }
 };

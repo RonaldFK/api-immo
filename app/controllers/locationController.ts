@@ -56,5 +56,49 @@ export const locationController = {
 
     const returnResult = await dataSource.getRepository(Location).find({where:{id:dataToInsert.raw[0].id}});
     res.status(200).json(returnResult);
+  },
+  async updateOneLocation (req:Request,res:Response) {
+    const id = req.params.id;
+    const dataRequest:typeLocation = req.body;
+
+    try{
+      await dataSource
+        .createQueryBuilder()
+        .update(Location)
+        .set({ num: dataRequest.num,
+          street: dataRequest.street ,
+          city:dataRequest.city,
+          country:dataRequest.country,
+          code:dataRequest.code
+        })
+        .where( { id: id })
+        .execute();
+
+      const returnResult = await dataSource.getRepository(Location).find({where:{id:Number(id)}});
+      console.table(returnResult);
+
+      returnResult.length>0 ? res.status(200).json(returnResult) : res.status(204).send();
+
+    } catch(err){console.log(err);
+      res.status(500).json(err);
+    }
+  },
+  async deleteOneLocation(req:Request,res:Response){
+    const id = req.params.id;
+
+    try{
+      const dataToDelete = await dataSource
+        .createQueryBuilder()
+        .delete()
+        .from(Location)
+        .where({ id: Number(id) })
+        .execute();
+
+      dataToDelete.affected === 1 ? res.status(200).json({Information: 'Supprimé avec succès'}) : res.json({Information: 'Aucun bien de correspond'});
+
+
+    } catch(err){console.log(err);
+      res.status(500).json(err);
+    }
   }
 };

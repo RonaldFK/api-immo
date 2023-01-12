@@ -17,9 +17,13 @@ export class Parking {
     @Column()
       updated_at?: Date;
 
-    @OneToOne(() => Location)
+    @OneToOne(() => Location, {cascade:true})
+
     @JoinColumn({ name: "location_id" })
       location?: Location;
 
+
 }
+
+
 

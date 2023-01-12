@@ -1,4 +1,4 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Customer } from "./Customer";
 
 @Entity()
@@ -9,11 +9,12 @@ export class Seller {
     @Column()
       customer_id!:number;
 
-      @OneToMany(() => Customer, (customer) => customer.id)
-        customers!: Customer[];
+    // @OneToMany(() => Customer, (customer) => customer.id)
+    // @JoinColumn({ name: "customer_id" })
+    //   customers?: Customer;
 
-  //   @OneToMany(() => Customer, (customer) => customer.id)
-  // customers?: Customer[];
+    @OneToOne(() => Customer)
+  @JoinColumn({ name: "customer_id" })
+      customer?: Customer;
 }
-
 

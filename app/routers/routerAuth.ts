@@ -1,8 +1,8 @@
 import express,{Request,Response} from "express";
 
-export const routerAuth = express.Router();
+export const authRouter = express.Router();
 
-routerAuth.get('/',(req:Request,res:Response)=>{
+authRouter.get('/',(req:Request,res:Response)=>{
   res.json('test nouvelle route');
   console.log('test');
 

@@ -24,7 +24,7 @@ exports.customerController = {
             }
         });
     },
-    getOneController(req, res) {
+    getOneCustomer(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
             try {
@@ -32,6 +32,32 @@ exports.customerController = {
                 customer.length > 0 ? res.status(200).json(customer) : res.status(204).send();
             }
             catch (err) {
+                res.status(500).json(err);
+            }
+        });
+    },
+    createCustomer(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const dataRequest = req.body;
+            try {
+                const dataToInsert = yield dataSource_1.dataSource
+                    .createQueryBuilder()
+                    .insert()
+                    .into(Customer_1.Customer)
+                    .values({ id: dataRequest.id,
+                    firstname: dataRequest.firstname,
+                    lastname: dataRequest.lastname,
+                    tel: dataRequest.tel,
+                    cash_or_credit: dataRequest.cash_or_credit,
+                    date_of_selling: dataRequest.date_of_selling
+                })
+                    .execute();
+                const returnResult = yield dataSource_1.dataSource.getRepository(Customer_1.Customer).find({ where: { id: dataToInsert.raw[0].id } });
+                console.table(returnResult);
+                res.status(200).json(returnResult);
+            }
+            catch (err) {
+                console.log(err);
                 res.status(500).json(err);
             }
         });
