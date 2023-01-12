@@ -4,7 +4,7 @@ export const router = express.Router();
 import { locationController } from '../controllers/locationController';
 import {controlSyntaxMiddleware} from '../middlewares/controlSyntaxMiddleware';
 import {controlUniqData} from '../middlewares/controlUniqData';
-
+import {customerController} from '../controllers/customerController';
 
 // ESTATE
 router.get('/estate',estateController.getAllEstate);
@@ -21,4 +21,8 @@ router.post('/location',controlUniqData.uniqueDataControl,locationController.cre
 
 // CUSTOMER
 
-router.get('/customer');
+router.get('/customer',customerController.getAllCustomer);
+router.get('/customer/:id',customerController.getOneController);
+// SELLER
+
+

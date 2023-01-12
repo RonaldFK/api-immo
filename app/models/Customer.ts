@@ -27,7 +27,7 @@ export class Customer{
     @Column()
       updated_at?: Date;
 
-    @ManyToOne(() => Seller, (seller) => seller.id)
-      seller?: Seller;
+  // @ManyToOne(() => Seller, (seller) => seller.id)
+  //   seller?: Seller;
 
 }
