@@ -23,7 +23,7 @@ __decorate([
     __metadata("design:type", Number)
 ], Seller.prototype, "customer_id", void 0);
 __decorate([
-    (0, typeorm_1.OneToOne)(() => Customer_1.Customer),
+    (0, typeorm_1.OneToMany)(() => Customer_1.Customer, (customer) => customer.seller),
     (0, typeorm_1.JoinColumn)({ name: "customer_id" }),
     __metadata("design:type", Customer_1.Customer)
 ], Seller.prototype, "customer", void 0);

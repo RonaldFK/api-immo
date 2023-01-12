@@ -51,7 +51,7 @@ __decorate([
     __metadata("design:type", Date)
 ], Customer.prototype, "updated_at", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(_type => Seller_1.Seller, seller => seller.customer_id),
+    (0, typeorm_1.ManyToOne)(_type => Seller_1.Seller, seller => seller.customer),
     (0, typeorm_1.JoinColumn)({ name: 'type_customer_id' }),
     __metadata("design:type", Seller_1.Seller)
 ], Customer.prototype, "seller", void 0);

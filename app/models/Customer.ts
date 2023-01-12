@@ -31,7 +31,8 @@ export class Customer{
       updated_at?: Date;
 
 
-    @ManyToOne(_type => Seller, seller => seller.customer_id)
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    @ManyToOne(_type => Seller, seller => seller.customer)
     @JoinColumn({ name: 'type_customer_id' })
       seller?: Seller;
 
