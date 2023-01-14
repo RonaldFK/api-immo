@@ -33,5 +33,6 @@ exports.mainRouter.patch('/location/:id', controlSyntaxMiddleware_1.controlSynta
 exports.mainRouter.get('/customer', customerController_1.customerController.getAllCustomer);
 exports.mainRouter.get('/customer/:id', controlSyntaxMiddleware_1.controlSyntaxMiddleware.syntaxIdControl, customerController_1.customerController.getOneCustomer);
 exports.mainRouter.post('/customer', controlUniqData_1.controlUniqData.uniqueDataControlCustomer, customerController_1.customerController.createCustomer);
+exports.mainRouter.patch('/customer/:id', controlSyntaxMiddleware_1.controlSyntaxMiddleware.syntaxIdControl, customerController_1.customerController.updateOneCustomer);
 // SELLER
 exports.mainRouter.get('/seller', sellerController_1.sellerController.getAllSeller);

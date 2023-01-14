@@ -65,7 +65,9 @@ mainRouter.post('/customer',
   controlUniqData.uniqueDataControlCustomer,
   customerController.createCustomer);
 
-
+mainRouter.patch('/customer/:id',
+  controlSyntaxMiddleware.syntaxIdControl,
+  customerController.updateOneCustomer);
 // SELLER
 
 mainRouter.get('/seller',

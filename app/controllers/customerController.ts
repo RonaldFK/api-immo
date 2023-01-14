@@ -40,6 +40,7 @@ export const customerController = {
             firstname: dataRequest.firstname ,
             lastname:dataRequest.lastname,
             tel:dataRequest.tel,
+            type_of_customer:dataRequest.type_of_customer,
             cash_or_credit:dataRequest.cash_or_credit,
             date_of_selling:dataRequest.date_of_selling
           }
@@ -50,6 +51,33 @@ export const customerController = {
       console.table(returnResult);
       res.status(200).json(returnResult);
     } catch(err){
+      console.log(err);
+
+      res.status(500).json(err);
+    }
+  },
+  async updateOneCustomer (req:Request,res:Response) {
+    const {id} = req.params;
+    const dataRequest:typeCustomer = req.body;
+
+    try{
+      await dataSource
+        .createQueryBuilder()
+        .update(Customer)
+        .set({ firstname: dataRequest.firstname,
+          lastname: dataRequest.lastname ,
+          tel:dataRequest.tel,
+          type_of_customer:dataRequest.type_of_customer,
+          cash_or_credit:dataRequest.cash_or_credit,
+          date_of_selling:dataRequest.date_of_selling
+        })
+        .where( { id: id })
+        .execute();
+
+      const returnResult = await dataSource.getRepository(Customer).find({where:{id:Number(id)}});
+      returnResult.length>0 ? res.status(200).json(returnResult) : res.status(204).send();
+
+    } catch(err){console.log(err);
       console.log(err);
 
       res.status(500).json(err);

@@ -50,6 +50,7 @@ exports.customerController = {
                     firstname: dataRequest.firstname,
                     lastname: dataRequest.lastname,
                     tel: dataRequest.tel,
+                    type_of_customer: dataRequest.type_of_customer,
                     cash_or_credit: dataRequest.cash_or_credit,
                     date_of_selling: dataRequest.date_of_selling
                 })
@@ -59,6 +60,33 @@ exports.customerController = {
                 res.status(200).json(returnResult);
             }
             catch (err) {
+                console.log(err);
+                res.status(500).json(err);
+            }
+        });
+    },
+    updateOneCustomer(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { id } = req.params;
+            const dataRequest = req.body;
+            try {
+                yield dataSource_1.dataSource
+                    .createQueryBuilder()
+                    .update(Customer_1.Customer)
+                    .set({ firstname: dataRequest.firstname,
+                    lastname: dataRequest.lastname,
+                    tel: dataRequest.tel,
+                    type_of_customer: dataRequest.type_of_customer,
+                    cash_or_credit: dataRequest.cash_or_credit,
+                    date_of_selling: dataRequest.date_of_selling
+                })
+                    .where({ id: id })
+                    .execute();
+                const returnResult = yield dataSource_1.dataSource.getRepository(Customer_1.Customer).find({ where: { id: Number(id) } });
+                returnResult.length > 0 ? res.status(200).json(returnResult) : res.status(204).send();
+            }
+            catch (err) {
+                console.log(err);
                 console.log(err);
                 res.status(500).json(err);
             }
