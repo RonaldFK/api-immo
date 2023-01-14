@@ -10,8 +10,10 @@ CREATE TABLE "manager"(
     "password" TEXT NOT NULL,
     "login" TEXT NOT NULL,
     "email" TEXT NOT NULL,
+    "type" TEXT NOT NULL DEFAULT 'nonAdmin',
     "created_at" timestamptz DEFAULT NOW(),
-    "updated_at" timestamptz
+    "updated_at" timestamptz,
+    UNIQUE ("firstname","lastname","login","email");
 );
 CREATE TABLE "customer" (
     "id" INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -95,4 +97,4 @@ WHERE "type_of_customer" = 'buyer';
 CREATE VIEW "renter_clients"
 AS
 SELECT * FROM "customer"
-WHERE "type_of_customer" = 'renter_client';
+WHERE "type_of_customer" = 'renterclient';

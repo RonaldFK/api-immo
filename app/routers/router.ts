@@ -5,7 +5,8 @@ import { locationController } from '../controllers/locationController';
 import {controlSyntaxMiddleware} from '../middlewares/controlSyntaxMiddleware';
 import {controlUniqData} from '../middlewares/controlUniqData';
 import {customerController} from '../controllers/customerController';
-import { sellerController } from '../controllers/sellerController';
+import { managerController } from '../controllers/managerController';
+import { error404 } from '../middlewares/error404';
 // ESTATE
 mainRouter.get('/estate',estateController.getAllEstate);
 
@@ -59,7 +60,12 @@ mainRouter.get('/customer',
 
 mainRouter.get('/customer/:id',
   controlSyntaxMiddleware.syntaxIdControl,
-  customerController.getOneCustomer);
+  customerController.getOneCustomerById);
+
+
+mainRouter.get('/customer/type/:type',
+  controlSyntaxMiddleware.syntaxTypeControl,
+  customerController.getOneCustomerByType);
 
 mainRouter.post('/customer',
   controlUniqData.uniqueDataControlCustomer,
@@ -68,8 +74,30 @@ mainRouter.post('/customer',
 mainRouter.patch('/customer/:id',
   controlSyntaxMiddleware.syntaxIdControl,
   customerController.updateOneCustomer);
-// SELLER
 
-mainRouter.get('/seller',
-  sellerController.getAllSeller);
+mainRouter.delete('/customer/:id',
+  controlSyntaxMiddleware.syntaxIdControl,
+  customerController.deleteOneCustomer);
 
+// MANAGER
+
+mainRouter.get('/manager',
+  managerController.getAllManager);
+
+mainRouter.get('/manager/:id',
+  controlSyntaxMiddleware.syntaxIdControl,
+  managerController.getOneManagerById);
+
+mainRouter.post('/manager',
+  controlUniqData.uniqueDataControlManager,
+  managerController.createManager);
+
+mainRouter.patch('/manager/:id',
+  controlSyntaxMiddleware.syntaxIdControl,
+  managerController.updateOneManager);
+
+mainRouter.delete('/manager/:id',
+  controlSyntaxMiddleware.syntaxIdControl,
+  managerController.deleteOneManager);
+
+mainRouter.use(error404);

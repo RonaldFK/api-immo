@@ -9,16 +9,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.customerController = void 0;
+exports.managerController = void 0;
 const dataSource_1 = require("../data/dataSource");
-const Customer_1 = require("../models/Customer");
-exports.customerController = {
-    getAllCustomer(req, res) {
+const Manager_1 = require("../models/Manager");
+exports.managerController = {
+    getAllManager(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                console.log('test');
-                const customerList = yield dataSource_1.dataSource.manager.find(Customer_1.Customer);
-                customerList.length > 0 ? res.status(200).json(customerList) : res.status(204).send();
+                const managerList = yield dataSource_1.dataSource.manager.find(Manager_1.Manager);
+                managerList.length > 0 ? res.status(200).json(managerList) : res.status(204).send();
             }
             catch (err) {
                 console.log(err);
@@ -26,48 +25,35 @@ exports.customerController = {
             }
         });
     },
-    getOneCustomerById(req, res) {
+    getOneManagerById(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
             try {
-                const customer = yield dataSource_1.dataSource.getRepository(Customer_1.Customer).find({ where: { id: Number(id) } });
-                customer.length > 0 ? res.status(200).json(customer) : res.status(204).send();
+                const manager = yield dataSource_1.dataSource.getRepository(Manager_1.Manager).find({ where: { id: Number(id) } });
+                manager.length > 0 ? res.status(200).json(manager) : res.status(204).send();
             }
             catch (err) {
                 res.status(500).json(err);
             }
         });
     },
-    getOneCustomerByType(req, res) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const { type } = req.params;
-            try {
-                const customer = yield dataSource_1.dataSource.getRepository(Customer_1.Customer).find({ where: { type_of_customer: type } });
-                customer.length > 0 ? res.status(200).json(customer) : res.status(204).send();
-            }
-            catch (err) {
-                res.status(500).json(err);
-            }
-        });
-    },
-    createCustomer(req, res) {
+    createManager(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const dataRequest = req.body;
             try {
                 const dataToInsert = yield dataSource_1.dataSource
                     .createQueryBuilder()
                     .insert()
-                    .into(Customer_1.Customer)
-                    .values({ id: dataRequest.id,
+                    .into(Manager_1.Manager)
+                    .values({
                     firstname: dataRequest.firstname,
                     lastname: dataRequest.lastname,
-                    tel: dataRequest.tel,
-                    type_of_customer: dataRequest.type_of_customer,
-                    cash_or_credit: dataRequest.cash_or_credit,
-                    date_of_selling: dataRequest.date_of_selling
+                    password: dataRequest.password,
+                    login: dataRequest.login,
+                    email: dataRequest.email
                 })
                     .execute();
-                const returnResult = yield dataSource_1.dataSource.getRepository(Customer_1.Customer).find({ where: { id: dataToInsert.raw[0].id } });
+                const returnResult = yield dataSource_1.dataSource.getRepository(Manager_1.Manager).find({ where: { id: dataToInsert.raw[0].id } });
                 console.table(returnResult);
                 res.status(200).json(returnResult);
             }
@@ -77,24 +63,24 @@ exports.customerController = {
             }
         });
     },
-    updateOneCustomer(req, res) {
+    updateOneManager(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
             const dataRequest = req.body;
             try {
                 yield dataSource_1.dataSource
                     .createQueryBuilder()
-                    .update(Customer_1.Customer)
-                    .set({ firstname: dataRequest.firstname,
+                    .update(Manager_1.Manager)
+                    .set({
+                    firstname: dataRequest.firstname,
                     lastname: dataRequest.lastname,
-                    tel: dataRequest.tel,
-                    type_of_customer: dataRequest.type_of_customer,
-                    cash_or_credit: dataRequest.cash_or_credit,
-                    date_of_selling: dataRequest.date_of_selling
+                    password: dataRequest.password,
+                    login: dataRequest.login,
+                    email: dataRequest.email
                 })
                     .where({ id: id })
                     .execute();
-                const returnResult = yield dataSource_1.dataSource.getRepository(Customer_1.Customer).find({ where: { id: Number(id) } });
+                const returnResult = yield dataSource_1.dataSource.getRepository(Manager_1.Manager).find({ where: { id: Number(id) } });
                 returnResult.length > 0 ? res.status(200).json(returnResult) : res.status(204).send();
             }
             catch (err) {
@@ -104,14 +90,14 @@ exports.customerController = {
             }
         });
     },
-    deleteOneCustomer(req, res) {
+    deleteOneManager(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
             try {
                 const dataToDelete = yield dataSource_1.dataSource
                     .createQueryBuilder()
                     .delete()
-                    .from(Customer_1.Customer)
+                    .from(Manager_1.Manager)
                     .where({ id: Number(id) })
                     .execute();
                 dataToDelete.affected === 1 ? res.status(200).json({ Information: 'Supprimé avec succès' }) : res.json({ Information: 'Aucun bien de correspond' });

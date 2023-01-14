@@ -11,7 +11,8 @@ const locationController_1 = require("../controllers/locationController");
 const controlSyntaxMiddleware_1 = require("../middlewares/controlSyntaxMiddleware");
 const controlUniqData_1 = require("../middlewares/controlUniqData");
 const customerController_1 = require("../controllers/customerController");
-const sellerController_1 = require("../controllers/sellerController");
+const managerController_1 = require("../controllers/managerController");
+const error404_1 = require("../middlewares/error404");
 // ESTATE
 exports.mainRouter.get('/estate', estateController_1.estateController.getAllEstate);
 exports.mainRouter.get('/estate/:id', controlSyntaxMiddleware_1.controlSyntaxMiddleware.syntaxIdControl, estateController_1.estateController.getOneEstateById);
@@ -31,8 +32,15 @@ exports.mainRouter.patch('/location/:id', controlSyntaxMiddleware_1.controlSynta
 //   locationController.deleteOneLocation);
 // CUSTOMER
 exports.mainRouter.get('/customer', customerController_1.customerController.getAllCustomer);
-exports.mainRouter.get('/customer/:id', controlSyntaxMiddleware_1.controlSyntaxMiddleware.syntaxIdControl, customerController_1.customerController.getOneCustomer);
+exports.mainRouter.get('/customer/:id', controlSyntaxMiddleware_1.controlSyntaxMiddleware.syntaxIdControl, customerController_1.customerController.getOneCustomerById);
+exports.mainRouter.get('/customer/type/:type', controlSyntaxMiddleware_1.controlSyntaxMiddleware.syntaxTypeControl, customerController_1.customerController.getOneCustomerByType);
 exports.mainRouter.post('/customer', controlUniqData_1.controlUniqData.uniqueDataControlCustomer, customerController_1.customerController.createCustomer);
 exports.mainRouter.patch('/customer/:id', controlSyntaxMiddleware_1.controlSyntaxMiddleware.syntaxIdControl, customerController_1.customerController.updateOneCustomer);
-// SELLER
-exports.mainRouter.get('/seller', sellerController_1.sellerController.getAllSeller);
+exports.mainRouter.delete('/customer/:id', controlSyntaxMiddleware_1.controlSyntaxMiddleware.syntaxIdControl, customerController_1.customerController.deleteOneCustomer);
+// MANAGER
+exports.mainRouter.get('/manager', managerController_1.managerController.getAllManager);
+exports.mainRouter.get('/manager/:id', controlSyntaxMiddleware_1.controlSyntaxMiddleware.syntaxIdControl, managerController_1.managerController.getOneManagerById);
+exports.mainRouter.post('/manager', controlUniqData_1.controlUniqData.uniqueDataControlManager, managerController_1.managerController.createManager);
+exports.mainRouter.patch('/manager/:id', controlSyntaxMiddleware_1.controlSyntaxMiddleware.syntaxIdControl, managerController_1.managerController.updateOneManager);
+exports.mainRouter.delete('/manager/:id', controlSyntaxMiddleware_1.controlSyntaxMiddleware.syntaxIdControl, managerController_1.managerController.deleteOneManager);
+exports.mainRouter.use(error404_1.error404);
