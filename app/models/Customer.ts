@@ -1,5 +1,5 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import { Seller } from "./Seller";
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+
 
 @Entity()
 
@@ -21,8 +21,9 @@ export class Customer{
     @Column()
       date_of_selling?:Date;
 
-      @Column()
-        type_customer_id?:number;
+    @Column()
+      type_of_customer?:string;
+
 
     @Column()
       created_at!: Date;
@@ -30,13 +31,4 @@ export class Customer{
     @Column()
       updated_at?: Date;
 
-
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    @ManyToOne(_type => Seller, seller => seller.customer)
-    @JoinColumn({ name: 'type_customer_id' })
-      seller?: Seller;
-
 }
-// @ManyToOne(type => Datasource, datasource => datasource. actions)
-//     @JoinColumn({ name: 'id_datasource' })
-//     datasource: Datasource;

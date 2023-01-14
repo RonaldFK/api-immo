@@ -1,11 +1,11 @@
 import {Request,Response}from 'express';
 import { dataSource } from '../data/dataSource';
-import { Seller } from '../models/Seller';
+
 
 export const sellerController = {
   async getAllSeller (req:Request,res:Response){
     try{
-      const sellerList = await dataSource.getRepository(Seller).find({relations:{customer:true}});
+      const sellerList = await dataSource.manager.query(`SELECT * FROM sellers`);
 
       console.table(sellerList);
 

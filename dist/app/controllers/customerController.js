@@ -16,10 +16,12 @@ exports.customerController = {
     getAllCustomer(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
+                console.log('test');
                 const customerList = yield dataSource_1.dataSource.manager.find(Customer_1.Customer);
                 customerList.length > 0 ? res.status(200).json(customerList) : res.status(204).send();
             }
             catch (err) {
+                console.log(err);
                 res.status(500).json(err);
             }
         });

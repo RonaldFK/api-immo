@@ -30,6 +30,12 @@ export class Estate {
   @Column()
     parking_id?:number;
 
+  @Column()
+    manager_id?:number;
+
+  @Column()
+    customer_id?:number;
+
   @OneToOne(() => Location)
   @JoinColumn({ name: "location_id" })
     location?: Location;

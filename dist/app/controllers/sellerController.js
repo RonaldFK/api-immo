@@ -11,12 +11,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.sellerController = void 0;
 const dataSource_1 = require("../data/dataSource");
-const Seller_1 = require("../models/Seller");
 exports.sellerController = {
     getAllSeller(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const sellerList = yield dataSource_1.dataSource.getRepository(Seller_1.Seller).find({ relations: { customer: true } });
+                const sellerList = yield dataSource_1.dataSource.manager.query(`SELECT * FROM sellers`);
                 console.table(sellerList);
                 sellerList.length > 0 ? res.status(200).json(sellerList) : res.status(204).send();
             }

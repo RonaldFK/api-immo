@@ -11,7 +11,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Customer = void 0;
 const typeorm_1 = require("typeorm");
-const Seller_1 = require("./Seller");
 let Customer = class Customer {
 };
 __decorate([
@@ -40,8 +39,8 @@ __decorate([
 ], Customer.prototype, "date_of_selling", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
-    __metadata("design:type", Number)
-], Customer.prototype, "type_customer_id", void 0);
+    __metadata("design:type", String)
+], Customer.prototype, "type_of_customer", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", Date)
@@ -50,15 +49,7 @@ __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", Date)
 ], Customer.prototype, "updated_at", void 0);
-__decorate([
-    (0, typeorm_1.ManyToOne)(_type => Seller_1.Seller, seller => seller.customer),
-    (0, typeorm_1.JoinColumn)({ name: 'type_customer_id' }),
-    __metadata("design:type", Seller_1.Seller)
-], Customer.prototype, "seller", void 0);
 Customer = __decorate([
     (0, typeorm_1.Entity)()
 ], Customer);
 exports.Customer = Customer;
-// @ManyToOne(type => Datasource, datasource => datasource. actions)
-//     @JoinColumn({ name: 'id_datasource' })
-//     datasource: Datasource;

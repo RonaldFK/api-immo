@@ -12,6 +12,12 @@ export class Parking {
       price!:number;
 
     @Column()
+      manager_id?:number;
+
+    @Column()
+      customer_id?:number;
+
+    @Column()
       created_at!: Date;
 
     @Column()

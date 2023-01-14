@@ -28,6 +28,14 @@ __decorate([
 ], Parking.prototype, "price", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
+], Parking.prototype, "manager_id", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
+], Parking.prototype, "customer_id", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
     __metadata("design:type", Date)
 ], Parking.prototype, "created_at", void 0);
 __decorate([

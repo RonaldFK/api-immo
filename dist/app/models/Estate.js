@@ -48,6 +48,14 @@ __decorate([
     __metadata("design:type", Number)
 ], Estate.prototype, "parking_id", void 0);
 __decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
+], Estate.prototype, "manager_id", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
+], Estate.prototype, "customer_id", void 0);
+__decorate([
     (0, typeorm_1.OneToOne)(() => Location_1.Location),
     (0, typeorm_1.JoinColumn)({ name: "location_id" }),
     __metadata("design:type", Location_1.Location)

@@ -5,11 +5,14 @@ import { Customer } from '../models/Customer';
 export const customerController = {
   async getAllCustomer (req:Request,res:Response){
     try{
+      console.log('test');
 
       const customerList = await dataSource.manager.find(Customer);
 
       customerList.length >0 ? res.status(200).json(customerList) : res.status(204).send();
     }catch(err){
+      console.log(err);
+
       res.status(500).json(err);
     }
   },
