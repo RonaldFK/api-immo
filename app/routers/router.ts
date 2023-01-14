@@ -49,9 +49,6 @@ mainRouter.patch('/location/:id',
 // non pertinent une route pour la supression d'une localisation.
 // Il est préférable de passer par un cascade lors de la supression d'un bien en lien avec cette localisation
 
-// mainRouter.delete('/location/:id',
-//   controlSyntaxMiddleware.syntaxIdControl,
-//   locationController.deleteOneLocation);
 
 // CUSTOMER
 

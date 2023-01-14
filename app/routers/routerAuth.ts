@@ -7,3 +7,5 @@ authRouter.get('/',(req:Request,res:Response)=>{
   console.log('test');
 
 });
+
+

@@ -11,7 +11,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Estate = void 0;
 const typeorm_1 = require("typeorm");
+const Customer_1 = require("./Customer");
 const Location_1 = require("./Location");
+const Manager_1 = require("./Manager");
 const Parking_1 = require("./Parking");
 let Estate = class Estate {
 };
@@ -65,6 +67,16 @@ __decorate([
     (0, typeorm_1.JoinColumn)({ name: "parking_id" }),
     __metadata("design:type", Parking_1.Parking)
 ], Estate.prototype, "parking", void 0);
+__decorate([
+    (0, typeorm_1.ManyToOne)(() => Customer_1.Customer, (customer) => customer.id),
+    (0, typeorm_1.JoinColumn)({ name: "customer_id" }),
+    __metadata("design:type", Customer_1.Customer)
+], Estate.prototype, "customer", void 0);
+__decorate([
+    (0, typeorm_1.ManyToOne)(() => Manager_1.Manager, (manager) => manager.id),
+    (0, typeorm_1.JoinColumn)({ name: "manager_id" }),
+    __metadata("design:type", Customer_1.Customer)
+], Estate.prototype, "manager", void 0);
 Estate = __decorate([
     (0, typeorm_1.Entity)(),
     (0, typeorm_1.Unique)(["name"])

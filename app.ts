@@ -20,8 +20,8 @@ dataSource.initialize()
 
 
 app.use(express.json());
-app.use('/',mainRouter);
 app.use('/login',authRouter);
+app.use('/',mainRouter);
 
 app.listen(port, () => {
   console.log(`server launched on port : ${port}`);

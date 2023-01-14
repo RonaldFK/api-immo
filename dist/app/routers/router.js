@@ -27,9 +27,6 @@ exports.mainRouter.post('/location', controlUniqData_1.controlUniqData.uniqueDat
 exports.mainRouter.patch('/location/:id', controlSyntaxMiddleware_1.controlSyntaxMiddleware.syntaxIdControl, locationController_1.locationController.updateOneLocation);
 // non pertinent une route pour la supression d'une localisation.
 // Il est préférable de passer par un cascade lors de la supression d'un bien en lien avec cette localisation
-// mainRouter.delete('/location/:id',
-//   controlSyntaxMiddleware.syntaxIdControl,
-//   locationController.deleteOneLocation);
 // CUSTOMER
 exports.mainRouter.get('/customer', customerController_1.customerController.getAllCustomer);
 exports.mainRouter.get('/customer/:id', controlSyntaxMiddleware_1.controlSyntaxMiddleware.syntaxIdControl, customerController_1.customerController.getOneCustomerById);

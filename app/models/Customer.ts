@@ -1,5 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
-
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Estate } from "./Estate";
 
 @Entity()
 
@@ -30,5 +30,9 @@ export class Customer{
 
     @Column()
       updated_at?: Date;
+
+    @OneToMany(() => Estate, (estate) => estate.customer_id)
+      estates?: Estate[];
+
 
 }

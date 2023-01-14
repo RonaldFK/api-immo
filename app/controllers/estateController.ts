@@ -29,7 +29,7 @@ export const estateController = {
     const id = req.params.id;
 
     try{
-      const estate = await dataSource.getRepository(Estate).find({where:{id:Number(id)},relations:{location:true,parking:true}});
+      const estate = await dataSource.getRepository(Estate).find({where:{id:Number(id)},relations:{location:true,parking:true,customer:true,manager:true}});
       estate.length > 0 ? res.status(200).json(estate) : res.status(204).send();
 
     } catch(err){
@@ -105,7 +105,9 @@ export const estateController = {
           price: dataRequest.price ,
           type:dataRequest.type,
           location_id:dataRequest.location_id,
-          parking_id:dataRequest.parking_id
+          parking_id:dataRequest.parking_id,
+          manager_id:dataRequest.manager_id,
+          customer_id:dataRequest.customer_id
         })
         .where( { id: id })
         .execute();
