@@ -81,9 +81,14 @@ mainRouter.delete('/customer/:id',
 mainRouter.get('/manager',
   managerController.getAllManager);
 
+mainRouter.get('/manager/:id/estate',
+  controlSyntaxMiddleware.syntaxIdControl,
+  managerController.getEstateByManager);
+
 mainRouter.get('/manager/:id',
   controlSyntaxMiddleware.syntaxIdControl,
   managerController.getOneManagerById);
+
 
 mainRouter.post('/manager',
   controlUniqData.uniqueDataControlManager,

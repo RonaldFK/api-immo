@@ -13,26 +13,29 @@ VALUES (20, 'rue sans nom','Neuilly','France',92200);
 INSERT INTO location("num", street, city, country,code)
 VALUES (45, 'rue de puy des domes','Clermont Ferrand','France',63000);
 
-INSERT INTO parking (name,price)
-VALUES('Box Paris 7 à louer',150000);
-
-INSERT INTO parking (name,price)
-VALUES('Parking appartement Clermont',150000);
-
-INSERT INTO parking (name,price)
-VALUES('parking 1',160000);
-
-INSERT INTO parking (name,price)
-VALUES('Parking 2',170000);
-
 INSERT INTO estate(name, price,type)
-VALUES ('Appartement de Clermont',200000,'Appartement');
+VALUES ('Appartement de Clermont',200000,'appartement');
 
 INSERT INTO estate(name, price,type)
 VALUES ('Maison à Bry',1000000, 'Maison');
 
-INSERT INTO parking (name,price)
-VALUES('Parking de la maison de Paris 8',150000);
+INSERT INTO estate(name, price,type)
+VALUES ('Box Paris 7 à louer',150000,'parking');
+
+INSERT INTO estate(name, price,type)
+VALUES ('Parking 1',50000, 'parking');
+
+INSERT INTO estate(name, price,type)
+VALUES ('Maison centre Paris',20000000,'maison');
+
+INSERT INTO estate(name, price,type)
+VALUES ('parking 2',20000, 'parking');
+
+INSERT INTO estate(name, price,type)
+VALUES ('Appartement Chells',150000,'appartement');
+
+INSERT INTO estate(name, price,type)
+VALUES ('Appartement Chelles',50000, 'appartement');
 
 INSERT INTO manager(firstname,lastname,password,login,email)
 VALUES ('bobi','jean','test','bobi.jean','bobi@gmail.com');
@@ -50,4 +53,4 @@ INSERT INTO customer(firstname,lastname,tel,type_of_customer,cash_or_credit)
 VALUES ('client3','client3','06','buyer','cash');
 
 INSERT INTO customer(firstname,lastname,tel,type_of_customer,cash_or_credit)
-VALUES ('client4','client4','08','renter_client','cash');
+VALUES ('client4','client4','08','renterclient','cash');

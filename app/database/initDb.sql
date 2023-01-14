@@ -1,6 +1,6 @@
 BEGIN;
 
-DROP TABLE IF EXISTS "manager","estate","customer","parking","location";
+DROP TABLE "manager","estate","customer","parking","location" CASCADE;
 
 
 CREATE TABLE "manager"(
@@ -13,7 +13,7 @@ CREATE TABLE "manager"(
     "type" TEXT NOT NULL DEFAULT 'nonAdmin',
     "created_at" timestamptz DEFAULT NOW(),
     "updated_at" timestamptz,
-    UNIQUE ("firstname","lastname","login","email");
+    UNIQUE ("firstname","lastname","login","email")
 );
 CREATE TABLE "customer" (
     "id" INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -58,25 +58,24 @@ CREATE TABLE "estate" (
     "created_at" timestamptz DEFAULT NOW(),
     "updated_at" timestamptz
 );
-CREATE TABLE "parking" (
-    "id" INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    "name" TEXT NOT NULL UNIQUE,
-    "price" INTEGER NOT NULL,
-    "created_at" timestamptz DEFAULT NOW(),
-    "updated_at" timestamptz
-);
+-- CREATE TABLE "parking" (
+--     "id" INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+--     "name" TEXT NOT NULL UNIQUE,
+--     "price" INTEGER NOT NULL,
+--     "created_at" timestamptz DEFAULT NOW(),
+--     "updated_at" timestamptz
+-- );
 
 ALTER TABLE estate
 ADD COLUMN location_id INTEGER REFERENCES "location"("id"),
-ADD COLUMN parking_id INTEGER REFERENCES "parking"("id"),
 ADD COLUMN manager_id INTEGER REFERENCES "manager"("id"),
 ADD COLUMN customer_id INTEGER REFERENCES "customer"("id");
 
-ALTER TABLE parking
-ADD COLUMN location_id INTEGER REFERENCES "location"("id"),
-ADD COLUMN manager_id INTEGER REFERENCES "manager"("id"),
-ADD COLUMN customer_id INTEGER REFERENCES "customer"("id");
-COMMIT;
+-- ALTER TABLE parking
+-- ADD COLUMN location_id INTEGER REFERENCES "location"("id"),
+-- ADD COLUMN manager_id INTEGER REFERENCES "manager"("id"),
+-- ADD COLUMN customer_id INTEGER REFERENCES "customer"("id");
+-- COMMIT;
 
 
 CREATE VIEW "sellers"

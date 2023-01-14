@@ -5,10 +5,10 @@ import { Customer } from '../models/Customer';
 export const customerController = {
   async getAllCustomer (req:Request,res:Response){
     try{
-      console.log('test');
+
 
       const customerList = await dataSource.manager.find(Customer);
-
+      console.table(customerList);
       customerList.length >0 ? res.status(200).json(customerList) : res.status(204).send();
     }catch(err){
       console.log(err);
@@ -21,6 +21,8 @@ export const customerController = {
 
     try{
       const customer = await dataSource.getRepository(Customer).find({where:{id:Number(id)}});
+
+
       customer.length > 0 ? res.status(200).json(customer) : res.status(204).send();
 
     } catch(err){

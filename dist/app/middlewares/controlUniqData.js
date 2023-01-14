@@ -79,7 +79,7 @@ exports.controlUniqData = {
                 || dataRequest.date_of_selling === undefined) {
                 return res.status(400).json({ Error: 'Formulaire non complet' });
             }
-            const dataToControl = yield dataSource_1.dataSource.getRepository(Customer_1.Customer).find({ where: { firstname: dataRequest.firstname, lastname: dataRequest.lastname, tel: Number(dataRequest.tel), cash_or_credit: dataRequest.cash_or_credit, date_of_selling: new Date(dataRequest.date_of_selling) } });
+            const dataToControl = yield dataSource_1.dataSource.getRepository(Customer_1.Customer).find({ where: { firstname: dataRequest.firstname, lastname: dataRequest.lastname, tel: Number(dataRequest.tel) } });
             if (dataToControl.length > 0) {
                 return res.status(400).json({ Error: 'Ce client existe déjà' });
             }
@@ -105,7 +105,7 @@ exports.controlUniqData = {
             }
             const dataToControl = yield dataSource_1.dataSource.getRepository(Manager_1.Manager).find({ where: { firstname: dataRequest.firstname, lastname: dataRequest.lastname, email: dataRequest.email, login: dataRequest.login } });
             if (dataToControl.length > 0) {
-                return res.status(400).json({ Error: 'Ce client existe déjà' });
+                return res.status(400).json({ Error: 'Ce manager à déjà été créé' });
             }
             next();
         });

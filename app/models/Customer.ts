@@ -32,7 +32,7 @@ export class Customer{
       updated_at?: Date;
 
     @OneToMany(() => Estate, (estate) => estate.customer_id)
-      estates?: Estate[];
+      estate?: Estate[];
 
 
 }

@@ -30,9 +30,39 @@ exports.managerController = {
             const { id } = req.params;
             try {
                 const manager = yield dataSource_1.dataSource.getRepository(Manager_1.Manager).find({ where: { id: Number(id) } });
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars, prefer-const, prefer-const, prefer-const
+                // let formatManagerDataToSend = [];
+                // // eslint-disable-next-line prefer-const
+                // let format: {[key: number]: string} ={};
+                // for (let i = 0; i < manager.length; i++) {
+                //   format = manager[i].bien;
+                // }
+                // formatManagerDataToSend.push(format);
+                // manager.push(formatManagerDataToSend);
+                // // console.log(newo);
                 manager.length > 0 ? res.status(200).json(manager) : res.status(204).send();
             }
             catch (err) {
+                console.log(err);
+                res.status(500).json(err);
+            }
+        });
+    },
+    getEstateByManager(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { id } = req.params;
+            try {
+                const estateOfCurrentManager = yield dataSource_1.dataSource.manager
+                    .query(`SELECT distinct e.name as biens
+      FROM manager as m
+      JOIN estate as e
+      ON m.id = e.manager_id
+      WHERE m.id = ${id}
+      order by biens;`);
+                estateOfCurrentManager.length > 0 ? res.status(200).json(estateOfCurrentManager) : res.status(204).send();
+            }
+            catch (err) {
+                console.log(err);
                 res.status(500).json(err);
             }
         });

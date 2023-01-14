@@ -3,7 +3,7 @@ import { Customer } from "./Customer";
 
 import { Location } from "./Location";
 import { Manager } from "./Manager";
-import { Parking } from "./Parking";
+
 
 @Entity()
 @Unique(["name"])
@@ -30,21 +30,18 @@ export class Estate {
     location_id?:number;
 
   @Column()
-    parking_id?:number;
-
-  @Column()
     manager_id?:number;
 
   @Column()
     customer_id?:number;
 
-  @OneToOne(() => Location)
+  @OneToOne(() => Location, {cascade:true})
   @JoinColumn({ name: "location_id" })
     location?: Location;
 
-  @OneToOne(() => Parking)
-  @JoinColumn({ name: "parking_id" })
-    parking?: Parking;
+  // @OneToOne(() => Parking)
+  // @JoinColumn({ name: "parking_id" })
+  //   parking?: Parking;
 
   @ManyToOne(() => Customer, (customer) => customer.id)
   @JoinColumn({ name: "customer_id" })
@@ -52,6 +49,6 @@ export class Estate {
 
   @ManyToOne(() => Manager, (manager) => manager.id)
   @JoinColumn({ name: "manager_id" })
-    manager?: Customer;
+    manager?: Manager;
 
 }

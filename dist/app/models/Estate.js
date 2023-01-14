@@ -14,7 +14,6 @@ const typeorm_1 = require("typeorm");
 const Customer_1 = require("./Customer");
 const Location_1 = require("./Location");
 const Manager_1 = require("./Manager");
-const Parking_1 = require("./Parking");
 let Estate = class Estate {
 };
 __decorate([
@@ -48,25 +47,16 @@ __decorate([
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", Number)
-], Estate.prototype, "parking_id", void 0);
-__decorate([
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", Number)
 ], Estate.prototype, "manager_id", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", Number)
 ], Estate.prototype, "customer_id", void 0);
 __decorate([
-    (0, typeorm_1.OneToOne)(() => Location_1.Location),
+    (0, typeorm_1.OneToOne)(() => Location_1.Location, { cascade: true }),
     (0, typeorm_1.JoinColumn)({ name: "location_id" }),
     __metadata("design:type", Location_1.Location)
 ], Estate.prototype, "location", void 0);
-__decorate([
-    (0, typeorm_1.OneToOne)(() => Parking_1.Parking),
-    (0, typeorm_1.JoinColumn)({ name: "parking_id" }),
-    __metadata("design:type", Parking_1.Parking)
-], Estate.prototype, "parking", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(() => Customer_1.Customer, (customer) => customer.id),
     (0, typeorm_1.JoinColumn)({ name: "customer_id" }),
@@ -75,7 +65,7 @@ __decorate([
 __decorate([
     (0, typeorm_1.ManyToOne)(() => Manager_1.Manager, (manager) => manager.id),
     (0, typeorm_1.JoinColumn)({ name: "manager_id" }),
-    __metadata("design:type", Customer_1.Customer)
+    __metadata("design:type", Manager_1.Manager)
 ], Estate.prototype, "manager", void 0);
 Estate = __decorate([
     (0, typeorm_1.Entity)(),

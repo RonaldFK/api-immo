@@ -53,7 +53,7 @@ __decorate([
 __decorate([
     (0, typeorm_1.OneToMany)(() => Estate_1.Estate, (estate) => estate.customer_id),
     __metadata("design:type", Array)
-], Customer.prototype, "estates", void 0);
+], Customer.prototype, "estate", void 0);
 Customer = __decorate([
     (0, typeorm_1.Entity)()
 ], Customer);

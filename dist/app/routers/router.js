@@ -36,6 +36,7 @@ exports.mainRouter.patch('/customer/:id', controlSyntaxMiddleware_1.controlSynta
 exports.mainRouter.delete('/customer/:id', controlSyntaxMiddleware_1.controlSyntaxMiddleware.syntaxIdControl, customerController_1.customerController.deleteOneCustomer);
 // MANAGER
 exports.mainRouter.get('/manager', managerController_1.managerController.getAllManager);
+exports.mainRouter.get('/manager/:id/estate', controlSyntaxMiddleware_1.controlSyntaxMiddleware.syntaxIdControl, managerController_1.managerController.getEstateByManager);
 exports.mainRouter.get('/manager/:id', controlSyntaxMiddleware_1.controlSyntaxMiddleware.syntaxIdControl, managerController_1.managerController.getOneManagerById);
 exports.mainRouter.post('/manager', controlUniqData_1.controlUniqData.uniqueDataControlManager, managerController_1.managerController.createManager);
 exports.mainRouter.patch('/manager/:id', controlSyntaxMiddleware_1.controlSyntaxMiddleware.syntaxIdControl, managerController_1.managerController.updateOneManager);

@@ -5,7 +5,6 @@ const typeorm_1 = require("typeorm");
 const Estate_1 = require("../models/Estate");
 const Location_1 = require("../models/Location");
 require("dotenv/config");
-const Parking_1 = require("../models/Parking");
 const Manager_1 = require("../models/Manager");
 const Customer_1 = require("../models/Customer");
 exports.dataSource = new typeorm_1.DataSource({
@@ -15,5 +14,5 @@ exports.dataSource = new typeorm_1.DataSource({
     username: process.env.PGUSER,
     password: process.env.PGPASSWORD,
     database: process.env.PGDATABASE,
-    entities: [Estate_1.Estate, Location_1.Location, Parking_1.Parking, Manager_1.Manager, Customer_1.Customer],
+    entities: [Estate_1.Estate, Location_1.Location, Manager_1.Manager, Customer_1.Customer],
 });

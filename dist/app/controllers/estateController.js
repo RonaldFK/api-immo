@@ -39,7 +39,7 @@ exports.estateController = {
         return __awaiter(this, void 0, void 0, function* () {
             const id = req.params.id;
             try {
-                const estate = yield dataSource_1.dataSource.getRepository(Estate_1.Estate).find({ where: { id: Number(id) }, relations: { location: true, parking: true, customer: true, manager: true } });
+                const estate = yield dataSource_1.dataSource.getRepository(Estate_1.Estate).find({ where: { id: Number(id) }, relations: { location: true, customer: true, manager: true } });
                 estate.length > 0 ? res.status(200).json(estate) : res.status(204).send();
             }
             catch (err) {
@@ -57,7 +57,7 @@ exports.estateController = {
         return __awaiter(this, void 0, void 0, function* () {
             const type = req.params.type;
             try {
-                const estate = yield dataSource_1.dataSource.getRepository(Estate_1.Estate).find({ where: { type: `${type}` } });
+                const estate = yield dataSource_1.dataSource.getRepository(Estate_1.Estate).find({ where: { type: `${type}` }, relations: { manager: true, customer: true } });
                 estate.length > 0 ? res.status(200).json(estate) : res.status(204).send();
             }
             catch (err) {
@@ -86,8 +86,7 @@ exports.estateController = {
                     .values({ name: dataRequest.name,
                     price: dataRequest.price,
                     type: dataRequest.type,
-                    location_id: dataRequest.location_id,
-                    parking_id: dataRequest.parking_id
+                    location_id: dataRequest.location_id
                 })
                     .execute();
                 const returnResult = yield dataSource_1.dataSource.getRepository(Estate_1.Estate).find({ where: { id: dataToInsert.raw[0].id } });
