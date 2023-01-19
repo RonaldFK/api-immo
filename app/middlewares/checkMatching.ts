@@ -8,7 +8,7 @@ export const checkMatching = {
     console.log(dataRequest);
 
     if (dataRequest.password !== dataRequest.checkPassword) {
-      res.status(400).json({Information:'Vérification du mot de passe non valide'});
+      return res.status(400).json({Information:'Vérification du mot de passe non valide'});
     }
     next();
   }

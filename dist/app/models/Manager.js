@@ -47,6 +47,10 @@ __decorate([
     __metadata("design:type", Date)
 ], Manager.prototype, "updated_at", void 0);
 __decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], Manager.prototype, "img", void 0);
+__decorate([
     (0, typeorm_1.OneToMany)(() => Estate_1.Estate, (estate) => estate.customer_id),
     __metadata("design:type", Array)
 ], Manager.prototype, "estate", void 0);

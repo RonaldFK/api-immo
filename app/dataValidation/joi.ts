@@ -16,8 +16,9 @@ export const schema = Joi.object().keys({
       tlds: { allow: ['com', 'net', 'email'] },
     }),
   password: Joi.string()
+    .min(8)
     .required()
-    .pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')),
+    .pattern(new RegExp('^[a-zA-Z0-9]$')),
   // suppression contrôle validation du mot de passe, géré en code maison
 });
 

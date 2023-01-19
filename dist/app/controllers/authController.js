@@ -74,17 +74,20 @@ exports.authController = {
     signinAccess(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const dataRequest = req.body;
+            // const test:typeManager = ['un','deux'];
             const dataToControl = yield dataSource_1.dataSource.getRepository(Manager_1.Manager).find({ where: { login: dataRequest.login } });
             console.log(dataToControl);
             // if (dataToControl.length != 1) {return res.status(400).json({Information:'Votre compte n\'existe pas'});}
             // // autorisation spécifique pour le user admin natif
             // if (login === 'admin') return res.render('listOfAcces');
+            // dataToControl = dataToControl[0];
             try {
-                const decryptPassword = yield bcrypt_1.default.compare(dataRequest.password, dataToControl.password);
+                const decryptPassword = yield bcrypt_1.default.compare(dataRequest.password, dataToControl[0].password);
                 // vérification correspondance login et mdp input et base
                 if (decryptPassword === false) {
                     return res.status(401).json({ Information: 'Mot de passe incorrect' });
                 }
+                res.json('tout est ok');
                 //   req.session.user = currentUser;
                 //   res.render('listOfAcces');
             }

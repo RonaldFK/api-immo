@@ -63,25 +63,27 @@ export const authController = {
   //    * @returns // On bloque le processus en cas de mauvais login ou password.
   //    */
   async signinAccess (req:Request, res:Response) {
-    const dataRequest:typeManager = req.body;
-    const dataToControl:signinManager[] = await dataSource.getRepository(Manager).find({where:{login:dataRequest.login}});
+    const dataRequest:signinManager = req.body;
+    // const test:typeManager = ['un','deux'];
+    const dataToControl = await dataSource.getRepository(Manager).find({where:{login:dataRequest.login}});
     console.log(dataToControl);
     // if (dataToControl.length != 1) {return res.status(400).json({Information:'Votre compte n\'existe pas'});}
 
     // // autorisation spécifique pour le user admin natif
     // if (login === 'admin') return res.render('listOfAcces');
+    // dataToControl = dataToControl[0];
 
     try {
       const decryptPassword = await bcrypt.compare(
         dataRequest.password,
-        dataToControl.password,
+        dataToControl[0].password,
       );
 
       // vérification correspondance login et mdp input et base
       if (decryptPassword === false) {
         return res.status(401).json({Information: 'Mot de passe incorrect'});
       }
-
+      res.json('tout est ok');
     //   req.session.user = currentUser;
     //   res.render('listOfAcces');
     } catch (err) {
