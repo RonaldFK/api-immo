@@ -103,7 +103,7 @@ exports.controlUniqData = {
                 || dataRequest.login === undefined) {
                 return res.status(400).json({ Error: 'Formulaire non complet' });
             }
-            const dataToControl = yield dataSource_1.dataSource.getRepository(Manager_1.Manager).find({ where: { firstname: dataRequest.firstname, lastname: dataRequest.lastname, email: dataRequest.email, login: dataRequest.login } });
+            const dataToControl = yield dataSource_1.dataSource.getRepository(Manager_1.Manager).find({ where: { email: dataRequest.email, login: dataRequest.login } });
             if (dataToControl.length > 0) {
                 return res.status(400).json({ Error: 'Ce manager à déjà été créé' });
             }

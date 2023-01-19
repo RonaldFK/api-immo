@@ -38,7 +38,9 @@ exports.mainRouter.delete('/customer/:id', controlSyntaxMiddleware_1.controlSynt
 exports.mainRouter.get('/manager', managerController_1.managerController.getAllManager);
 exports.mainRouter.get('/manager/:id/estate', controlSyntaxMiddleware_1.controlSyntaxMiddleware.syntaxIdControl, managerController_1.managerController.getEstateByManager);
 exports.mainRouter.get('/manager/:id', controlSyntaxMiddleware_1.controlSyntaxMiddleware.syntaxIdControl, managerController_1.managerController.getOneManagerById);
-exports.mainRouter.post('/manager', controlUniqData_1.controlUniqData.uniqueDataControlManager, managerController_1.managerController.createManager);
+// mainRouter.post('/manager',
+//   controlUniqData.uniqueDataControlManager,
+//   managerController.createManager);
 exports.mainRouter.patch('/manager/:id', controlSyntaxMiddleware_1.controlSyntaxMiddleware.syntaxIdControl, managerController_1.managerController.updateOneManager);
 exports.mainRouter.delete('/manager/:id', controlSyntaxMiddleware_1.controlSyntaxMiddleware.syntaxIdControl, managerController_1.managerController.deleteOneManager);
 exports.mainRouter.use(error404_1.error404);

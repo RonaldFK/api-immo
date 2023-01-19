@@ -20,7 +20,7 @@ dataSource.initialize()
 
 
 app.use(express.json());
-app.use('/login',authRouter);
+app.use('/auth',authRouter);
 app.use('/',mainRouter);
 
 app.listen(port, () => {

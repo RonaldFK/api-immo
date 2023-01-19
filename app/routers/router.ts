@@ -90,9 +90,9 @@ mainRouter.get('/manager/:id',
   managerController.getOneManagerById);
 
 
-mainRouter.post('/manager',
-  controlUniqData.uniqueDataControlManager,
-  managerController.createManager);
+// mainRouter.post('/manager',
+//   controlUniqData.uniqueDataControlManager,
+//   managerController.createManager);
 
 mainRouter.patch('/manager/:id',
   controlSyntaxMiddleware.syntaxIdControl,
