@@ -23,6 +23,6 @@ exports.schema = joi_1.default.object().keys({
     password: joi_1.default.string()
         .min(8)
         .required()
-        .pattern(new RegExp('^[a-zA-Z0-9]$')),
+        .pattern(new RegExp('^[a-zA-Z0-9]{8,30}$')),
     // suppression contrôle validation du mot de passe, géré en code maison
 });

@@ -2,9 +2,8 @@ import express from 'express';
 import 'dotenv/config';
 import 'reflect-metadata';
 import { dataSource } from './app/data/dataSource';
-import {mainRouter} from './app/routers/router';
+import {router} from './app/routers/index';
 
-import { authRouter } from './app/routers/routerAuth';
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -20,8 +19,8 @@ dataSource.initialize()
 
 
 app.use(express.json());
-app.use('/auth',authRouter);
-app.use('/',mainRouter);
+app.use(router);
+
 
 app.listen(port, () => {
   console.log(`server launched on port : ${port}`);

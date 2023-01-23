@@ -1,12 +1,16 @@
 import express from 'express';
-import { estateController } from '../controllers/estateController';
 export const mainRouter = express.Router();
-import { locationController } from '../controllers/locationController';
-import {controlSyntaxMiddleware} from '../middlewares/controlSyntaxMiddleware';
-import {controlUniqData} from '../middlewares/controlUniqData';
-import {customerController} from '../controllers/customerController';
-import { managerController } from '../controllers/managerController';
-import { error404 } from '../middlewares/error404';
+
+import { estateController,
+  locationController,
+  customerController,
+  managerController } from '../controllers/index';
+
+import {controlSyntaxMiddleware,
+  controlUniqData,
+} from '../middlewares/index';
+
+
 // ESTATE
 mainRouter.get('/estate',estateController.getAllEstate);
 
@@ -102,4 +106,4 @@ mainRouter.delete('/manager/:id',
   controlSyntaxMiddleware.syntaxIdControl,
   managerController.deleteOneManager);
 
-mainRouter.use(error404);
+
