@@ -9,6 +9,8 @@ exports.router = express_1.default.Router();
 const routerAuth_1 = require("./routerAuth");
 const router_1 = require("./router");
 const index_1 = require("../middlewares/index");
+const routerToken_1 = require("./routerToken");
 exports.router.use('/auth', routerAuth_1.authRouter);
+exports.router.use('/token', routerToken_1.routerToken);
 exports.router.use('/', router_1.mainRouter);
 exports.router.use(index_1.error404);
