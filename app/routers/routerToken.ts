@@ -1,4 +1,4 @@
-import express, { Request, Response } from 'express';
+import express from 'express';
 import { tokenController } from '../controllers/tokenController';
 
 export const routerToken = express.Router();

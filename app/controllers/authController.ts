@@ -3,6 +3,9 @@ import bcrypt from 'bcrypt';
 import {schema} from '../dataValidation/joi';
 import { Manager } from '../models/Manager';
 import { dataSource } from '../data/dataSource';
+import { tokenController } from './tokenController';
+import { signinManager } from '../@types/manager';
+import { json } from 'stream/consumers';
 // import transporter from '../dataValidation/nodeMailer';
 const saltRounds = 10;
 
@@ -16,7 +19,7 @@ export const authController = {
   async signupAccount (req:Request, res:Response) {
     console.log('TEST PASSAGE');
 
-    const dataRequest:typeManager = req.body;
+    const dataRequest = req.body;
     // récupération du retour de la validation
     const verif = schema.validate({
       firstname:dataRequest.firstname,
@@ -30,8 +33,6 @@ export const authController = {
     }
     // Récupération du hash du password avant stockage en bdd
     const hashPassword = await bcrypt.hash(dataRequest.password, saltRounds);
-
-
 
     try {
       const dataToInsert = await dataSource
@@ -64,14 +65,9 @@ export const authController = {
   //    */
   async signinAccess (req:Request, res:Response) {
     const dataRequest:signinManager = req.body;
-    // const test:typeManager = ['un','deux'];
-    const dataToControl = await dataSource.getRepository(Manager).find({where:{login:dataRequest.login}});
-    console.log(dataToControl);
-    // if (dataToControl.length != 1) {return res.status(400).json({Information:'Votre compte n\'existe pas'});}
 
-    // // autorisation spécifique pour le user admin natif
-    // if (login === 'admin') return res.render('listOfAcces');
-    // dataToControl = dataToControl[0];
+    const dataToControl = await dataSource.getRepository(Manager).find({where:{login:dataRequest.login}});
+
 
     try {
       const decryptPassword = await bcrypt.compare(
@@ -83,9 +79,9 @@ export const authController = {
       if (decryptPassword === false) {
         return res.status(401).json({Information: 'Mot de passe incorrect'});
       }
-      res.json('tout est ok');
-    //   req.session.user = currentUser;
-    //   res.render('listOfAcces');
+      const tokenUser = await tokenController.genToken({login:dataToControl[0].login});
+      res.json({Info:'tout est ok',token:tokenUser});
+
     } catch (err) {
       console.log(err);
       return res.status(500).json({Information : 'Mot de passe ou login incorrect'});
