@@ -4,8 +4,7 @@ import {schema} from '../dataValidation/joi';
 import { Manager } from '../models/Manager';
 import { dataSource } from '../data/dataSource';
 import { tokenController } from './tokenController';
-import { signinManager } from '../@types/manager';
-import { json } from 'stream/consumers';
+
 // import transporter from '../dataValidation/nodeMailer';
 const saltRounds = 10;
 
@@ -80,7 +79,7 @@ export const authController = {
         return res.status(401).json({Information: 'Mot de passe incorrect'});
       }
       const tokenUser = await tokenController.genToken({login:dataToControl[0].login});
-      res.json({Info:'tout est ok',token:tokenUser});
+      res.json({Info:'tout est ok',tokenUser});
 
     } catch (err) {
       console.log(err);

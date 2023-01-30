@@ -83,7 +83,7 @@ exports.authController = {
                     return res.status(401).json({ Information: 'Mot de passe incorrect' });
                 }
                 const tokenUser = yield tokenController_1.tokenController.genToken({ login: dataToControl[0].login });
-                res.json({ Info: 'tout est ok', token: tokenUser });
+                res.json({ Info: 'tout est ok', tokenUser });
             }
             catch (err) {
                 console.log(err);

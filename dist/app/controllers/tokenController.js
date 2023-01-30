@@ -54,16 +54,18 @@ exports.tokenController = {
             let tokenToCheck = req.headers.authorization;
             // uniquement nécessaire pour les tests avec postman
             tokenToCheck = tokenToCheck === null || tokenToCheck === void 0 ? void 0 : tokenToCheck.replace('Bearer ', '');
-            console.log(tokenToCheck);
+            // console.log(tokenToCheck);
             try {
-                const decoded = yield jsonwebtoken_1.default.verify(`${tokenToCheck}`, 'secret');
-                if (decoded) {
+                const decoded = yield jsonwebtoken_1.default.verify(`${tokenToCheck}`, process.env.JWT_KEY || 'secret');
+                console.log(decoded === null || decoded === void 0 ? void 0 : decoded.data);
+                if (decoded === null || decoded === void 0 ? void 0 : decoded.data) {
                     res.status(200).json({ Information: 'token valide' });
                 }
             }
             catch (err) {
+                // console.log(decoded,'TCHEKC');
                 console.log(err);
-                res.status(401).json({ Error: 'acces denied' });
+                (err === null || err === void 0 ? void 0 : err.expiredAt) ? res.status(401).json({ Error: 'acces denied', expiredAt: err === null || err === void 0 ? void 0 : err.expiredAt }) : res.status(401).json({ Error: 'acces denied' });
             }
         });
     }

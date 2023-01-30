@@ -1,4 +1,4 @@
-import { number } from "joi";
+// import { number } from "joi";
 
 type typeManager = {
         id:number,

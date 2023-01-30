@@ -10,7 +10,7 @@
 
 Api-immo est un projet d'api pour application immobilière.<br />
 L'idée est de constuire une base de données en rapport avec les besoins d'une agence immobilière classique et de mettre à disposition une API pour servir ces données.
-Cela part du besoin de pouvoir gérer les biens dans une application web, mais également
+Cela permet pour l'instant de gérer les biens dans une application web
 
 
 ### Architecture du projet :

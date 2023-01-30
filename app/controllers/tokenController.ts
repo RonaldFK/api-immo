@@ -47,19 +47,22 @@ export const tokenController = {
 
     // uniquement nécessaire pour les tests avec postman
     tokenToCheck = tokenToCheck?.replace('Bearer ','');
-    console.log(tokenToCheck);
+    // console.log(tokenToCheck);
+
 
     try {
-      const decoded = await jwt.verify(`${tokenToCheck}`, 'secret');
+      const decoded = await jwt.verify(`${tokenToCheck}`, process.env.JWT_KEY || 'secret');
+      console.log(decoded?.data);
 
-      if (decoded) {
+      if (decoded?.data) {
 
         res.status(200).json({Information : 'token valide'});
       }
     } catch(err) {
+      // console.log(decoded,'TCHEKC');
       console.log(err);
 
-      res.status(401).json({Error: 'acces denied'});
+      err?.expiredAt ? res.status(401).json({Error: 'acces denied',expiredAt:err?.expiredAt}) :res.status(401).json({Error: 'acces denied'});
 
     }
   }
