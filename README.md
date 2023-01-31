@@ -13,7 +13,9 @@ L'idée est de constuire une base de données en rapport avec les besoins d'une 
 Cela permet pour l'instant de gérer les biens dans une application web
 
 
-### Architecture du projet :
+### Todo :
+
+ - Documentation API avec swagger
 
 
 
