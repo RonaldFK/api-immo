@@ -3,6 +3,7 @@ BEGIN;
 DROP TABLE "manager","estate","customer","parking","location" CASCADE;
 
 
+
 CREATE TABLE "manager"(
     "id" INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     "firstname" TEXT NOT NULL,
@@ -53,7 +54,7 @@ CREATE TABLE "estate" (
 ALTER TABLE estate
 ADD COLUMN location_id INTEGER REFERENCES "location"("id"),
 ADD COLUMN manager_id INTEGER REFERENCES "manager"("id"),
-ADD COLUMN customer_id INTEGER REFERENCES "customer"("id");
+ADD COLUMN customer_id INTEGER REFERENCES "customer"("id") ON DELETE CASCADE;
 
 ALTER TABLE customer
 ADD COLUMN estate_id INTEGER REFERENCES "estate"("id");
