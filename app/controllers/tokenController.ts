@@ -10,21 +10,8 @@ export const tokenController = {
    * @param req
    * @param res communication du token
    */
-  // async genToken(req:Request,res:Response){
-  //   const dataRequest = req.body;
 
-  //   const token = await jwt.sign({
-
-  //     data: {dataRequest}
-  //   }, process.env.JWT_KEY || 'secret', { expiresIn: 120 });
-  //   try {
-  //     res.json(token);
-
-  //   }catch(err){ console.log(err);
-  //   }
-  // },
   async genToken(obj:{login:string}){
-    // const dataRequest = req.body;
 
     const token = await jwt.sign({
 
@@ -33,8 +20,7 @@ export const tokenController = {
     try {
       return {token:token};
 
-    }catch(err){ return err;
-    }
+    }catch(err){ return err;}
   },
   /**
    * Permet de vérifier si le user possède un token valide
@@ -47,8 +33,6 @@ export const tokenController = {
 
     // uniquement nécessaire pour les tests avec postman
     tokenToCheck = tokenToCheck?.replace('Bearer ','');
-    // console.log(tokenToCheck);
-
 
     try {
       const decoded = await jwt.verify(`${tokenToCheck}`, process.env.JWT_KEY || 'secret');
@@ -59,7 +43,6 @@ export const tokenController = {
         res.status(200).json({Information : 'token valide'});
       }
     } catch(err) {
-      // console.log(decoded,'TCHEKC');
       console.log(err);
 
       err?.expiredAt ? res.status(401).json({Error: 'acces denied',expiredAt:err?.expiredAt}) :res.status(401).json({Error: 'acces denied'});

@@ -56,12 +56,12 @@ export const authController = {
       console.log(err);
     }
   },
-  //   /**
-  //    *
-  //    * @param {*} req // Doit récupérer le crédentital ( login, passowrd) du user.
-  //    * @param {*} res // Il renvoie ma page et construit mon objet de session
-  //    * @returns // On bloque le processus en cas de mauvais login ou password.
-  //    */
+  /**
+     * Fonction d'authentification et renvoie d'un token de session
+     * @param {*} req // Doit récupérer le crédentital ( login, passowrd) du user.
+     * @param {*} res // Il renvoie ma page et construit mon objet de session
+     * @returns // On bloque le processus en cas de mauvais login ou password.
+     */
   async signinAccess (req:Request, res:Response) {
     const dataRequest:signinManager = req.body;
 
