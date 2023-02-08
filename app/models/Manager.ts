@@ -26,8 +26,8 @@ export class Manager{
 
   @Column()
     updated_at?: Date;
-  @Column()
-    img!:BinaryType;
+  // @Column()
+  //   img!:BinaryType;
 
   @OneToMany(() => Estate, (estate) => estate.customer_id)
     estate?: Estate[];

@@ -26,7 +26,7 @@ export const authController = {
       email:dataRequest.email,
       password:dataRequest.password,
     });
-    console.log(verif.error);
+    console.log(verif);
     if (verif.error?.details[0].message) {
       return res.status(400).json({Information:`${verif.error?.details[0].message}`});
     }
