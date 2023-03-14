@@ -35,6 +35,9 @@ export class Estate {
   @Column()
     customer_id?:number;
 
+  @Column()
+    date_of_selling?:Date;
+
   @OneToOne(() => Location, {cascade:true})
   @JoinColumn({ name: "location_id" })
     location?: Location;

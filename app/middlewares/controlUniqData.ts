@@ -64,8 +64,7 @@ export const controlUniqData = {
     if (dataRequest.firstname === undefined
       || dataRequest.lastname === undefined
       || dataRequest.tel === undefined
-      || dataRequest.cash_or_credit === undefined
-      || dataRequest.date_of_selling === undefined){ return res.status(400).json({Error:'Formulaire non complet'});}
+      || dataRequest.cash_or_credit === undefined){ return res.status(400).json({Error:'Formulaire non complet'});}
 
     const dataToControl = await dataSource.getRepository(Customer).find({where:{firstname:dataRequest.firstname,lastname:dataRequest.lastname,tel:Number(dataRequest.tel)}});
 

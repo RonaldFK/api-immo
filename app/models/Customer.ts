@@ -19,9 +19,6 @@ export class Customer{
       cash_or_credit!:string;
 
     @Column()
-      date_of_selling?:Date;
-
-    @Column()
       type_of_customer?:string;
 
 

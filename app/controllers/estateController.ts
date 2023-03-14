@@ -59,7 +59,7 @@ export const estateController = {
    * @param res
    */
   async createEstate(req:Request,res:Response){
-    const dataRequest:typeEstate = req.body;
+    const dataRequest = <typeEstate>req.body;
     if (dataRequest.name === undefined
       || dataRequest.price === undefined
       || dataRequest.type === undefined){res.status(400).json({Error:'Formulaire non complet'});}
