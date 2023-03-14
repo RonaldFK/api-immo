@@ -19,7 +19,7 @@ export const controlToken = {
 
       if (decoded?.data) {
 
-        res.status(200);
+        // res.status(200);
         next();
       }
     } catch(err) {

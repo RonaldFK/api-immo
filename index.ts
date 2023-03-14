@@ -3,8 +3,7 @@ import 'dotenv/config';
 import 'reflect-metadata';
 import { dataSource } from './app/data/dataSource';
 import {router} from './app/routers/index';
-
-
+import cors from 'cors';
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -18,6 +17,13 @@ dataSource.initialize()
   });
 
 
+//
+const allowedOrigins = ['http://localhost:8080'];
+
+const options: cors.CorsOptions = {
+  origin: allowedOrigins
+};
+app.use(cors(options));
 app.use(express.json());
 app.use(router);
 

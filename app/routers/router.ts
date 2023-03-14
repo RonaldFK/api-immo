@@ -1,6 +1,7 @@
 import express from 'express';
 export const mainRouter = express.Router();
 
+
 import { estateController,
   locationController,
   customerController,
@@ -10,6 +11,17 @@ import {controlSyntaxMiddleware,
   controlUniqData,
 } from '../middlewares/index';
 
+import {updloadPhoto} from '../controllers/addPhoto';
+import { uploadFile } from '../middlewares/uploadFile';
+
+
+mainRouter.post('/photo',uploadFile,
+  updloadPhoto.addPhoto);
+///
+mainRouter.get('/photo/:name',uploadFile,
+  updloadPhoto.getPhoto);
+mainRouter.get('/photo',uploadFile,
+  updloadPhoto.getListPhoto);
 
 // ESTATE
 mainRouter.get('/estate',estateController.getAllEstate);
