@@ -92,30 +92,6 @@ mainRouter.delete('/customer/:id',
   controlSyntaxMiddleware.syntaxIdControl,
   customerController.deleteOneCustomer);
 
-// MANAGER
 
-mainRouter.get('/manager',
-  managerController.getAllManager);
-
-mainRouter.get('/manager/:id/estate',
-  controlSyntaxMiddleware.syntaxIdControl,
-  managerController.getEstateByManager);
-
-mainRouter.get('/manager/:id',
-  controlSyntaxMiddleware.syntaxIdControl,
-  managerController.getOneManagerById);
-
-
-// mainRouter.post('/manager',
-//   controlUniqData.uniqueDataControlManager,
-//   managerController.createManager);
-
-mainRouter.patch('/manager/:id',
-  controlSyntaxMiddleware.syntaxIdControl,
-  managerController.updateOneManager);
-
-mainRouter.delete('/manager/:id',
-  controlSyntaxMiddleware.syntaxIdControl,
-  managerController.deleteOneManager);
 
 
