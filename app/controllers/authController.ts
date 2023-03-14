@@ -48,6 +48,7 @@ export const authController = {
           }
         )
         .execute();
+      //delete dataToInsert.password;
       console.log(dataToInsert);
       res.status(200).json({Information:'Votre compte à été créé'});
 

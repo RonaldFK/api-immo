@@ -22,6 +22,9 @@ export class Manager{
       email!:string;
 
     @Column()
+      admin!:boolean;
+
+    @Column()
       created_at!: Date;
 
   @Column()

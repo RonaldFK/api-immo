@@ -3,3 +3,6 @@ node_modules
 todo.md
 dist/
 conception.drawio
+app/assets/
+.vscode/
+.DS_Store

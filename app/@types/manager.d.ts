@@ -8,6 +8,7 @@ type typeManager = {
         checkPassword: string,
         login: string,
         email: string,
+        admin:boolean
 }
 
 type signinManager = {
