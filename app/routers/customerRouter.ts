@@ -8,7 +8,7 @@ import {controlSyntaxMiddleware,
   controlUniqData,
 } from '../middlewares/index';
 
-customerRouter.route('/customer')
+customerRouter.route('/')
   .get(
     customerController.getAllCustomer)
 
@@ -16,7 +16,7 @@ customerRouter.route('/customer')
     controlUniqData.uniqueDataControlCustomer,
     customerController.createCustomer);
 
-customerRouter.route('/customer/:id')
+customerRouter.route('/:id')
   .get(
     controlSyntaxMiddleware.syntaxIdControl,
     customerController.getOneCustomerById)
@@ -29,7 +29,7 @@ customerRouter.route('/customer/:id')
     controlSyntaxMiddleware.syntaxIdControl,
     customerController.deleteOneCustomer);
 
-customerRouter.get('/customer/type/:type',
+customerRouter.get('/type/:type',
   controlSyntaxMiddleware.syntaxTypeControl,
   customerController.getOneCustomerByType);
 

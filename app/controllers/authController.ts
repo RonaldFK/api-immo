@@ -16,7 +16,6 @@ export const authController = {
    * @returns // On bloque le processus en cas de mauvais login ou password.
    */
   async signupAccount (req:Request, res:Response) {
-    console.log('TEST PASSAGE');
 
     const dataRequest = req.body;
     // récupération du retour de la validation
@@ -26,7 +25,7 @@ export const authController = {
       email:dataRequest.email,
       password:dataRequest.password,
     });
-    console.log(verif);
+
     if (verif.error?.details[0].message) {
       return res.status(400).json({Information:`${verif.error?.details[0].message}`});
     }
@@ -48,8 +47,6 @@ export const authController = {
           }
         )
         .execute();
-      //delete dataToInsert.password;
-      console.log(dataToInsert);
       res.status(200).json({Information:'Votre compte à été créé'});
 
     }

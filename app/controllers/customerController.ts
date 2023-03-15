@@ -22,7 +22,6 @@ export const customerController = {
     try{
       const customer = await dataSource.getRepository(Customer).find({where:{id:Number(id)}});
 
-
       customer.length > 0 ? res.status(200).json(customer) : res.status(204).send();
 
     } catch(err){
@@ -41,7 +40,7 @@ export const customerController = {
     }
   },
   async createCustomer (req:Request,res:Response) {
-    const dataRequest:typeCustomer = req.body;
+    const dataRequest = <typeCustomer>req.body;
 
     try{
       const dataToInsert = await dataSource
@@ -49,14 +48,7 @@ export const customerController = {
         .insert()
         .into(Customer)
         .values(
-          { id: dataRequest.id,
-            firstname: dataRequest.firstname ,
-            lastname:dataRequest.lastname,
-            tel:dataRequest.tel,
-            type_of_customer:dataRequest.type_of_customer,
-            cash_or_credit:dataRequest.cash_or_credit,
-            date_of_selling:dataRequest.date_of_selling
-          }
+          dataRequest
         )
         .execute();
 
