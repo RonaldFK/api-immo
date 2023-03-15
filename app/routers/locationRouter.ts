@@ -10,20 +10,21 @@ import {controlSyntaxMiddleware,
 
 
 // LOCATION
-locationRouter.get('/location',
-  locationController.getAllLocation);
+locationRouter.route('/location')
+  .get( locationController.getAllLocation)
 
-locationRouter.get('/location/:id',
-  controlSyntaxMiddleware.syntaxIdControl,
-  locationController.getOneLocationById);
+  .post(
+    controlUniqData.uniqueDataControlLocation,
+    locationController.createLocation);
 
-locationRouter.post('/location',
-  controlUniqData.uniqueDataControlLocation,
-  locationController.createLocation);
+locationRouter.route('/location/:id')
+  .get(
+    controlSyntaxMiddleware.syntaxIdControl,
+    locationController.getOneLocationById)
 
-locationRouter.patch('/location/:id',
-  controlSyntaxMiddleware.syntaxIdControl,
-  locationController.updateOneLocation);
+  .patch(
+    controlSyntaxMiddleware.syntaxIdControl,
+    locationController.updateOneLocation);
 
 // non pertinent une route pour la supression d'une localisation.
 // Il est préférable de passer par un cascade lors de la supression d'un bien en lien avec cette localisation

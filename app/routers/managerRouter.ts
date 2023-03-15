@@ -15,6 +15,7 @@ managerRouter.route('/manager/:id')
   .get(
     controlSyntaxMiddleware.syntaxIdControl,
     managerController.getOneManagerById)
+
   .patch(
     controlSyntaxMiddleware.syntaxIdControl,
     managerController.updateOneManager)

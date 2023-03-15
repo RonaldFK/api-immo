@@ -11,6 +11,7 @@ import {controlSyntaxMiddleware,
 customerRouter.route('/customer')
   .get(
     customerController.getAllCustomer)
+
   .post(
     controlUniqData.uniqueDataControlCustomer,
     customerController.createCustomer);
