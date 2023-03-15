@@ -1,5 +1,6 @@
 import { dataSource } from '../data/dataSource';
 import { Estate } from '../models/Estate';
+import { uploadFile } from '../middlewares/uploadFile';
 import { Request,Response } from 'express';
 
 export const estateController = {
@@ -140,6 +141,37 @@ export const estateController = {
     } catch(err){console.log(err);
       res.status(500).json(err);
     }
-  }
+  },
+  // async addPhoto(req:Request,res:Response){
+  // try{
+  //   console.log(req.file);
+
+  //   if (req.file == undefined) {
+  //     return res.status(400).send({ message: "Please upload a file!" });
+  //   }
+
+  //   res.status(200).send({
+  //     message: "Uploaded the file successfully: " + req.file.originalname,
+  //   });
+  // }catch (err) {
+  //   res.status(500).send({
+  //     message: `Could not upload the file: ${req.file?.originalname}. ${err}`,
+  //   });
+  // }
+  // },
+  getPhoto(req:Request, res:Response){
+    const fileName = req.params.name;
+    const directoryPath = "app/assets/";
+
+    res.download(directoryPath + fileName, fileName, (err) => {
+      console.log('DOWNLOAD');
+
+      if (err) {
+        res.status(500).send({
+          message: "Could not download the file. " + err,
+        });
+      }
+    });
+  },
 };
 

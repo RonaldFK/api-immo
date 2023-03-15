@@ -64,34 +64,34 @@ export const managerController = {
       res.status(500).json(err);
     }
   },
-  async createManager (req:Request,res:Response) {
-    const dataRequest:typeManager = req.body;
+  // async createManager (req:Request,res:Response) {
+  //   const dataRequest:typeManager = req.body;
 
-    try{
-      const dataToInsert = await dataSource
-        .createQueryBuilder()
-        .insert()
-        .into(Manager)
-        .values(
-          {
-            firstname: dataRequest.firstname ,
-            lastname:dataRequest.lastname,
-            password:dataRequest.password,
-            login:dataRequest.login,
-            email:dataRequest.email
-          }
-        )
-        .execute();
+  //   try{
+  //     const dataToInsert = await dataSource
+  //       .createQueryBuilder()
+  //       .insert()
+  //       .into(Manager)
+  //       .values(
+  //         {
+  //           firstname: dataRequest.firstname ,
+  //           lastname:dataRequest.lastname,
+  //           password:dataRequest.password,
+  //           login:dataRequest.login,
+  //           email:dataRequest.email
+  //         }
+  //       )
+  //       .execute();
 
-      const returnResult = await dataSource.getRepository(Manager).find({where:{id:dataToInsert.raw[0].id}});
-      console.table(returnResult);
-      res.status(200).json(returnResult);
-    } catch(err){
-      console.log(err);
+  //     const returnResult = await dataSource.getRepository(Manager).find({where:{id:dataToInsert.raw[0].id}});
+  //     console.table(returnResult);
+  //     res.status(200).json(returnResult);
+  //   } catch(err){
+  //     console.log(err);
 
-      res.status(500).json(err);
-    }
-  },
+  //     res.status(500).json(err);
+  //   }
+  // },
   async updateOneManager (req:Request,res:Response) {
     const {id} = req.params;
     const dataRequest:typeManager = req.body;
