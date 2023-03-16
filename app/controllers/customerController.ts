@@ -63,19 +63,13 @@ export const customerController = {
   },
   async updateOneCustomer (req:Request,res:Response) {
     const {id} = req.params;
-    const dataRequest:typeCustomer = req.body;
+    const dataRequest = <typeCustomer>req.body;
 
     try{
       await dataSource
         .createQueryBuilder()
         .update(Customer)
-        .set({ firstname: dataRequest.firstname,
-          lastname: dataRequest.lastname ,
-          tel:dataRequest.tel,
-          type_of_customer:dataRequest.type_of_customer,
-          cash_or_credit:dataRequest.cash_or_credit,
-          date_of_selling:dataRequest.date_of_selling
-        })
+        .set(dataRequest)
         .where( { id: id })
         .execute();
 
