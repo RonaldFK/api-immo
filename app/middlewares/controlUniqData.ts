@@ -15,7 +15,7 @@ export const controlUniqData = {
    * @returns
    */
   async uniqueDataControlEstate (req:Request,res:Response,next:NextFunction){
-    const dataRequest:typeEstate = req.body;
+    const dataRequest = <typeEstate>req.body;
 
     if (dataRequest.name === undefined
       || dataRequest.price === undefined
@@ -37,7 +37,7 @@ export const controlUniqData = {
    * @returns
    */
   async uniqueDataControlLocation (req:Request,res:Response,next:NextFunction){
-    const dataRequest:typeLocation = req.body;
+    const dataRequest = <typeLocation>req.body;
 
     if (dataRequest.num === undefined
       || dataRequest.street === undefined
@@ -60,7 +60,7 @@ export const controlUniqData = {
    * @returns
    */
   async uniqueDataControlCustomer (req:Request,res:Response,next:NextFunction){
-    const dataRequest:typeCustomer = req.body;
+    const dataRequest = <typeCustomer>req.body;
     if (dataRequest.firstname === undefined
       || dataRequest.lastname === undefined
       || dataRequest.tel === undefined
@@ -82,7 +82,7 @@ export const controlUniqData = {
    * @returns
    */
   async uniqueDataControlManager (req:Request,res:Response,next:NextFunction){
-    const dataRequest:typeManager = req.body;
+    const dataRequest = <typeManager>req.body;
     if (dataRequest.firstname === undefined
       || dataRequest.lastname === undefined
       || dataRequest.password === undefined
@@ -104,7 +104,7 @@ export const controlUniqData = {
    * @returns
    */
   async uniqueDataControlParking (req:Request,res:Response,next:NextFunction){
-    const dataRequest:typeParking = req.body;
+    const dataRequest = <typeParking>req.body;
 
     if (dataRequest.name === undefined
         || dataRequest.price === undefined){return res.status(400).json({Error:'Formulaire non complet'});}
