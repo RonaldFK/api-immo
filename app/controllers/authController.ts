@@ -16,9 +16,8 @@ export const authController = {
    * @returns // On bloque le processus en cas de mauvais login ou password.
    */
   async signupAccount (req:Request, res:Response) {
-    console.log('TEST PASSAGE');
 
-    const dataRequest = req.body;
+    const dataRequest = <typeManager>req.body;
     // récupération du retour de la validation
     const verif = schema.validate({
       firstname:dataRequest.firstname,
@@ -26,30 +25,25 @@ export const authController = {
       email:dataRequest.email,
       password:dataRequest.password,
     });
-    console.log(verif);
+
     if (verif.error?.details[0].message) {
       return res.status(400).json({Information:`${verif.error?.details[0].message}`});
     }
     // Récupération du hash du password avant stockage en bdd
-    const hashPassword = await bcrypt.hash(dataRequest.password, saltRounds);
+    if(dataRequest?.password){
+      const hashPassword = await bcrypt.hash(dataRequest.password, saltRounds);
+      dataRequest.password = hashPassword;
+    }
 
     try {
-      const dataToInsert = await dataSource
+      await dataSource
         .createQueryBuilder()
         .insert()
         .into(Manager)
         .values(
-          {
-            firstname: dataRequest.firstname ,
-            lastname:dataRequest.lastname,
-            password:hashPassword,
-            login:dataRequest.login,
-            email:dataRequest.email
-          }
+          dataRequest
         )
         .execute();
-      //delete dataToInsert.password;
-      console.log(dataToInsert);
       res.status(200).json({Information:'Votre compte à été créé'});
 
     }
@@ -64,10 +58,9 @@ export const authController = {
      * @returns // On bloque le processus en cas de mauvais login ou password.
      */
   async signinAccess (req:Request, res:Response) {
-    const dataRequest:signinManager = req.body;
+    const dataRequest = <signinManager>req.body;
 
     const dataToControl = await dataSource.getRepository(Manager).find({where:{login:dataRequest.login}});
-
 
     try {
       const decryptPassword = await bcrypt.compare(

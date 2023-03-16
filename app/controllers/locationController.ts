@@ -38,19 +38,14 @@ export const locationController = {
    * @param res
    */
   async createLocation (req:Request,res:Response){
-    const dataRequest:typeLocation = req.body;
+    const dataRequest = <typeLocation>req.body;
 
     const dataToInsert = await dataSource
       .createQueryBuilder()
       .insert()
       .into(Location)
       .values(
-        { num:dataRequest.num,
-          street: dataRequest.street,
-          city: dataRequest.city ,
-          country:dataRequest.country,
-          code:dataRequest.code
-        }
+        dataRequest
       )
       .execute();
 
@@ -59,18 +54,13 @@ export const locationController = {
   },
   async updateOneLocation (req:Request,res:Response) {
     const id = req.params.id;
-    const dataRequest:typeLocation = req.body;
+    const dataRequest = <typeLocation>req.body;
 
     try{
       await dataSource
         .createQueryBuilder()
         .update(Location)
-        .set({ num: dataRequest.num,
-          street: dataRequest.street ,
-          city:dataRequest.city,
-          country:dataRequest.country,
-          code:dataRequest.code
-        })
+        .set(dataRequest)
         .where( { id: id })
         .execute();
 
