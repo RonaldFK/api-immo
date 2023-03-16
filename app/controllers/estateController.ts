@@ -2,6 +2,7 @@ import { dataSource } from '../data/dataSource';
 import { Estate } from '../models/Estate';
 import { uploadFile } from '../middlewares/uploadFile';
 import { Request,Response } from 'express';
+import { Photo } from '../models/Photo';
 
 export const estateController = {
   /**
@@ -60,7 +61,7 @@ export const estateController = {
    * @param res
    */
   async createEstate(req:Request,res:Response){
-    console.log('RESULT',req.body.estate);
+    console.log('RESULT',req.files);
     let dataRequest;
     if(req.body?.estate){
       dataRequest = JSON.parse(req.body.estate);
@@ -80,10 +81,21 @@ export const estateController = {
           dataRequest
         )
         .execute();
+      // Ajout des photos
+      if (req?.files){
 
-      const returnResult = await dataSource.getRepository(Estate).find({where:{id:dataToInsert?.raw[0]?.id}});
-      res.status(200).json(returnResult);
+        for(let i=0;i<req?.files.length;i++){
+          await dataSource
+            .createQueryBuilder()
+            .insert()
+            .into(Photo)
+            .values({name: req.files[i]?.originalname,estate_id:dataToInsert?.raw[0]?.id})
+            .execute();
+        }
+      }
 
+      const returnResult = await dataSource.getRepository(Estate).find({where:{id:dataToInsert?.raw[0]?.id},relations:{photos:true}});
+      res.status(200).json(returnResult[0]);
 
     } catch(err){
       console.log(err);

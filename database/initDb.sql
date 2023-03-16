@@ -69,11 +69,13 @@ CREATE TABLE "estate" (
 );
 CREATE TABLE "photo" (
     "id" INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    "name" TEXT NOT NULL UNIQUE,
+    "name" TEXT NOT NULL,
     "manager_id" INTEGER REFERENCES "manager"("id"),
     "estate_id" INTEGER REFERENCES "estate"("id"),
     "created_at" timestamptz DEFAULT NOW(),
-    "updated_at" timestamptz
+    "updated_at" timestamptz,
+    UNIQUE(name, estate_id),
+    UNIQUE(name, manager_id)
 );
 ALTER TABLE estate
 ADD COLUMN location_id INTEGER REFERENCES "location"("id"),
