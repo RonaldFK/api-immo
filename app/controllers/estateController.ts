@@ -71,11 +71,7 @@ export const estateController = {
         .insert()
         .into(Estate)
         .values(
-          { name: dataRequest.name,
-            price: dataRequest.price ,
-            type:dataRequest.type,
-            location_id:dataRequest.location_id
-          }
+          dataRequest
         )
         .execute();
 
