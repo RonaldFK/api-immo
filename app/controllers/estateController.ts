@@ -95,20 +95,13 @@ export const estateController = {
    */
   async updateOneEstate(req:Request,res:Response){
     const id = req.params.id;
-    const dataRequest:typeEstate = req.body;
+    const dataRequest = <typeEstate>req.body;
 
     try{
       await dataSource
         .createQueryBuilder()
         .update(Estate)
-        .set({ name: dataRequest.name,
-          price: dataRequest.price ,
-          type:dataRequest.type,
-          location_id:dataRequest.location_id,
-          parking_id:dataRequest.parking_id,
-          manager_id:dataRequest.manager_id,
-          customer_id:dataRequest.customer_id
-        })
+        .set(dataRequest)
         .where( { id: id })
         .execute();
 

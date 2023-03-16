@@ -58,7 +58,7 @@ export const authController = {
      * @returns // On bloque le processus en cas de mauvais login ou password.
      */
   async signinAccess (req:Request, res:Response) {
-    const dataRequest= <signinManager>req.body;
+    const dataRequest = <signinManager>req.body;
 
     const dataToControl = await dataSource.getRepository(Manager).find({where:{login:dataRequest.login}});
 
