@@ -4,14 +4,14 @@ export const managerRouter = express.Router();
 import { managerController } from '../controllers/index';
 import {controlSyntaxMiddleware} from '../middlewares/index';
 
-managerRouter.get('/manager',
+managerRouter.get('/',
   managerController.getAllManager);
 
-managerRouter.get('/manager/:id/estate',
+managerRouter.get('/:id/estate',
   controlSyntaxMiddleware.syntaxIdControl,
   managerController.getEstateByManager);
 
-managerRouter.route('/manager/:id')
+managerRouter.route('/:id')
   .get(
     controlSyntaxMiddleware.syntaxIdControl,
     managerController.getOneManagerById)

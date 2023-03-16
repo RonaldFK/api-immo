@@ -60,7 +60,13 @@ export const estateController = {
    * @param res
    */
   async createEstate(req:Request,res:Response){
-    const dataRequest = <typeEstate>req.body;
+    console.log('RESULT',req.body.estate);
+    let dataRequest;
+    if(req.body?.estate){
+      dataRequest = JSON.parse(req.body.estate);
+    }
+
+    // const dataRequest = <typeEstate>req.body;
     if (dataRequest.name === undefined
       || dataRequest.price === undefined
       || dataRequest.type === undefined){res.status(400).json({Error:'Formulaire non complet'});}
@@ -75,7 +81,7 @@ export const estateController = {
         )
         .execute();
 
-      const returnResult = await dataSource.getRepository(Estate).find({where:{id:dataToInsert.raw[0].id}});
+      const returnResult = await dataSource.getRepository(Estate).find({where:{id:dataToInsert?.raw[0]?.id}});
       res.status(200).json(returnResult);
 
 

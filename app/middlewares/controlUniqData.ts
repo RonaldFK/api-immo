@@ -15,7 +15,11 @@ export const controlUniqData = {
    * @returns
    */
   async uniqueDataControlEstate (req:Request,res:Response,next:NextFunction){
-    const dataRequest = <typeEstate>req.body;
+    // const dataRequest = <typeEstate>req.body;
+    let dataRequest;
+    if(req.body?.estate){
+      dataRequest = JSON.parse(req.body.estate);
+    }
 
     if (dataRequest.name === undefined
       || dataRequest.price === undefined
