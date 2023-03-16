@@ -31,7 +31,7 @@ export const estateController = {
     const id = req.params.id;
 
     try{
-      const estate = await dataSource.getRepository(Estate).find({where:{id:Number(id)},relations:{location:true,customer:true,manager:true}});
+      const estate = await dataSource.getRepository(Estate).find({where:{id:Number(id)},relations:{location:true,customer:true,manager:true,photos:true}});
       estate.length > 0 ? res.status(200).json(estate) : res.status(204).send();
 
     } catch(err){
@@ -108,18 +108,37 @@ export const estateController = {
    * @param res
    */
   async updateOneEstate(req:Request,res:Response){
-    const id = req.params.id;
-    const dataRequest = <typeEstate>req.body;
+    const id = Number(req.params.id);
+    let dataRequest;
+    if(req.body?.estate){
+      dataRequest = <typeEstate>JSON.parse(req.body.estate);
+
+    }
+    console.log(dataRequest);
 
     try{
       await dataSource
         .createQueryBuilder()
         .update(Estate)
-        .set(dataRequest)
+        .set(<typeEstate>dataRequest)
         .where( { id: id })
         .execute();
 
-      const returnResult = await dataSource.getRepository(Estate).find({where:{id:Number(id)}});
+      const returnResult = await dataSource.getRepository(Estate).find({where:{id:id}});
+      console.log(returnResult);
+
+      // Ajout des photos
+      if (req?.files){
+
+        for(let i=0;i<req?.files.length;i++){
+          await dataSource
+            .createQueryBuilder()
+            .insert()
+            .into(Photo)
+            .values({name: req.files[i]?.originalname,estate_id:id})
+            .execute();
+        }
+      }
       returnResult.length>0 ? res.status(200).json(returnResult) : res.status(204).send();
 
     } catch(err){console.log(err);

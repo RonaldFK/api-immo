@@ -21,7 +21,7 @@ estateRouter.route('/:id')
     controlSyntaxMiddleware.syntaxIdControl,
     estateController.getOneEstateById)
 
-  .patch(
+  .patch(uploadFile,
     controlSyntaxMiddleware.syntaxIdControl,
     estateController.updateOneEstate)
 
