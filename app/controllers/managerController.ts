@@ -55,7 +55,6 @@ export const managerController = {
       WHERE m.id = ${id}
       order by biens;`);
 
-
       estateOfCurrentManager.length > 0 ? res.status(200).json(estateOfCurrentManager) : res.status(204).send();
 
     } catch(err){
@@ -94,19 +93,13 @@ export const managerController = {
   // },
   async updateOneManager (req:Request,res:Response) {
     const {id} = req.params;
-    const dataRequest:typeManager = req.body;
+    const dataRequest = <typeManager>req.body;
 
     try{
       await dataSource
         .createQueryBuilder()
         .update(Manager)
-        .set({
-          firstname: dataRequest.firstname ,
-          lastname:dataRequest.lastname,
-          password:dataRequest.password,
-          login:dataRequest.login,
-          email:dataRequest.email
-        })
+        .set(dataRequest)
         .where( { id: id })
         .execute();
 
