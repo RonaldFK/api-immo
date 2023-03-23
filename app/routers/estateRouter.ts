@@ -14,7 +14,8 @@ estateRouter.route('/')
 
   .post(uploadFile,
     controlUniqData.uniqueDataControlEstate,
-    estateController.createEstate);
+    estateController.createEstate
+  );
 
 estateRouter.route('/:id')
   .get(
@@ -33,7 +34,7 @@ estateRouter.get('/type/:type',
   controlSyntaxMiddleware.syntaxTypeControl,
   estateController.getEstateByType);
 
-estateRouter.get('/:id/:photo',
+estateRouter.get('/:id/photo/:name',
   controlSyntaxMiddleware.syntaxTypeControl,
   estateController.getPhoto);
 
