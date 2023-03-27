@@ -10,14 +10,14 @@ import {controlSyntaxMiddleware,
 
 
 // LOCATION
-locationRouter.route('/location')
+locationRouter.route('/')
   .get( locationController.getAllLocation)
 
   .post(
     controlUniqData.uniqueDataControlLocation,
     locationController.createLocation);
 
-locationRouter.route('/location/:id')
+locationRouter.route('/:id')
   .get(
     controlSyntaxMiddleware.syntaxIdControl,
     locationController.getOneLocationById)

@@ -10,6 +10,8 @@ export const locationController = {
    * @param res
    */
   async getAllLocation (req:Request,res:Response) {
+    console.log('location');
+
     try{
       const locationList = await dataSource.manager.find(Location);
       locationList.length > 0 ? res.status(200).json(locationList) : res.status(204).send();

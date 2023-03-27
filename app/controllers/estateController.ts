@@ -1,7 +1,8 @@
 import { dataSource } from '../data/dataSource';
 import { Estate } from '../models/Estate';
 import { uploadFile } from '../middlewares/uploadFile';
-import { Request,Response } from 'express';
+import { Request, Response } from 'express';
+import { Photo } from '../models/Photo';
 
 export const estateController = {
   /**
@@ -9,31 +10,39 @@ export const estateController = {
    * @param _req
    * @param res
    */
-  async getAllEstate (_req:Request,res:Response) {
-    try{
+  async getAllEstate(_req: Request, res: Response) {
+    try {
       const estateList = await dataSource.manager.find(Estate);
-      estateList.length >0 ? res.status(200).json(estateList) : res.status(204).send();
-
-    } catch(err){
+      estateList.length > 0
+        ? res.status(200).json(estateList.sort())
+        : res.status(204).send();
+    } catch (err) {
       console.log(err);
       res.status(500).json(err);
     }
-
   },
   /**
    * Récupère les informations d'un bien en particulier selon l'ID founie.
    * @param req
    * @param res
    */
-  async getOneEstateById (req:Request,res:Response){
-
+  async getOneEstateById(req: Request, res: Response) {
     const id = req.params.id;
 
-    try{
-      const estate = await dataSource.getRepository(Estate).find({where:{id:Number(id)},relations:{location:true,customer:true,manager:true}});
+    try {
+      const estate = await dataSource
+        .getRepository(Estate)
+        .find({
+          where: { id: Number(id) },
+          relations: {
+            location: true,
+            customer: true,
+            manager: true,
+            photos: true,
+          },
+        });
       estate.length > 0 ? res.status(200).json(estate) : res.status(204).send();
-
-    } catch(err){
+    } catch (err) {
       console.log(err);
       res.status(500).json(err);
     }
@@ -43,14 +52,18 @@ export const estateController = {
    * @param req
    * @param res
    */
-  async getEstateByType (req:Request,res:Response){
+  async getEstateByType(req: Request, res: Response) {
     const type = req.params.type;
 
-    try{
-      const estate = await dataSource.getRepository(Estate).find({where:{type:`${type}`},relations:{manager:true,customer:true}});
+    try {
+      const estate = await dataSource
+        .getRepository(Estate)
+        .find({
+          where: { type: `${type}` },
+          relations: { manager: true, customer: true },
+        });
       estate.length > 0 ? res.status(200).json(estate) : res.status(204).send();
-
-    } catch(err){
+    } catch (err) {
       res.status(500).json(err);
     }
   },
@@ -59,29 +72,57 @@ export const estateController = {
    * @param req
    * @param res
    */
-  async createEstate(req:Request,res:Response){
-    const dataRequest = <typeEstate>req.body;
-    if (dataRequest.name === undefined
-      || dataRequest.price === undefined
-      || dataRequest.type === undefined){res.status(400).json({Error:'Formulaire non complet'});}
+  async createEstate(req: Request, res: Response) {
+    console.log('ESTATE');
 
-    try{
+    let dataRequest;
+    if (req.body?.estate) {
+      dataRequest = JSON.parse(req.body.estate);
+    }
+    console.log(dataRequest,'DANS LE CONTROLLER');
+
+    (dataRequest.manager_id === '') && (dataRequest.manager_id = null);
+    (dataRequest.location_id === '') && (dataRequest.location_id = null);
+
+    if (
+      dataRequest.name === undefined ||
+      dataRequest.price === undefined ||
+      dataRequest.type === undefined
+    ) {
+      res.status(400).json({ Error: 'Formulaire non complet' });
+    }
+
+    try {
       const dataToInsert = await dataSource
         .createQueryBuilder()
         .insert()
         .into(Estate)
-        .values(
-          dataRequest
-        )
+        .values(dataRequest)
         .execute();
+      // Ajout des photos
+      if (req?.files) {
+        for (let i = 0; i < req?.files.length; i++) {
+          await dataSource
+            .createQueryBuilder()
+            .insert()
+            .into(Photo)
+            .values({
+              name: req.files[i]?.filename,
+              estate_id: dataToInsert?.raw[0]?.id,
+            })
+            .execute();
+        }
+      }
 
-      const returnResult = await dataSource.getRepository(Estate).find({where:{id:dataToInsert.raw[0].id}});
-      res.status(200).json(returnResult);
-
-
-    } catch(err){
+      const returnResult = await dataSource
+        .getRepository(Estate)
+        .find({
+          where: { id: dataToInsert?.raw[0]?.id },
+          relations: { photos: true },
+        });
+      res.status(200).json(returnResult[0]);
+    } catch (err) {
       console.log(err);
-
     }
   },
   /**
@@ -89,22 +130,42 @@ export const estateController = {
    * @param req
    * @param res
    */
-  async updateOneEstate(req:Request,res:Response){
-    const id = req.params.id;
-    const dataRequest = <typeEstate>req.body;
+  async updateOneEstate(req: Request, res: Response) {
+    const id = Number(req.params.id);
+    let dataRequest;
+    if (req.body?.estate) {
+      dataRequest = <typeEstate>JSON.parse(req.body.estate);
+    }
 
-    try{
+    try {
       await dataSource
         .createQueryBuilder()
         .update(Estate)
-        .set(dataRequest)
-        .where( { id: id })
+        .set(<typeEstate>dataRequest)
+        .where({ id: id })
         .execute();
 
-      const returnResult = await dataSource.getRepository(Estate).find({where:{id:Number(id)}});
-      returnResult.length>0 ? res.status(200).json(returnResult) : res.status(204).send();
+      const returnResult = await dataSource
+        .getRepository(Estate)
+        .find({ where: { id: id } });
+      console.log(returnResult);
 
-    } catch(err){console.log(err);
+      // Ajout des photos
+      if (req?.files) {
+        for (let i = 0; i < req?.files.length; i++) {
+          await dataSource
+            .createQueryBuilder()
+            .insert()
+            .into(Photo)
+            .values({ name: req.files[i]?.filename, estate_id: id })
+            .execute();
+        }
+      }
+      returnResult.length > 0
+        ? res.status(200).json(returnResult)
+        : res.status(204).send();
+    } catch (err) {
+      console.log(err);
       res.status(500).json(err);
     }
   },
@@ -113,10 +174,10 @@ export const estateController = {
    * @param req
    * @param res
    */
-  async deleteOneEstate(req:Request,res:Response){
+  async deleteOneEstate(req: Request, res: Response) {
     const id = req.params.id;
 
-    try{
+    try {
       const dataToDelete = await dataSource
         .createQueryBuilder()
         .delete()
@@ -124,43 +185,28 @@ export const estateController = {
         .where({ id: Number(id) })
         .execute();
 
-      dataToDelete.affected === 1 ? res.status(200).json({Information: 'Supprimé avec succès'}) : res.json({Information: 'Aucun bien de correspond'});
-
-
-    } catch(err){console.log(err);
+      dataToDelete.affected === 1
+        ? res.status(200).json({ Information: 'Supprimé avec succès' })
+        : res.json({ Information: 'Aucun bien de correspond' });
+    } catch (err) {
+      console.log(err);
       res.status(500).json(err);
     }
   },
-  // async addPhoto(req:Request,res:Response){
-  // try{
-  //   console.log(req.file);
+  getPhoto(req: Request, res: Response) {
+    console.log('PASSAGE ');
 
-  //   if (req.file == undefined) {
-  //     return res.status(400).send({ message: "Please upload a file!" });
-  //   }
-
-  //   res.status(200).send({
-  //     message: "Uploaded the file successfully: " + req.file.originalname,
-  //   });
-  // }catch (err) {
-  //   res.status(500).send({
-  //     message: `Could not upload the file: ${req.file?.originalname}. ${err}`,
-  //   });
-  // }
-  // },
-  getPhoto(req:Request, res:Response){
     const fileName = req.params.name;
-    const directoryPath = "app/assets/";
+    const directoryPath = 'app/assets/';
 
     res.download(directoryPath + fileName, fileName, (err) => {
       console.log('DOWNLOAD');
 
       if (err) {
         res.status(500).send({
-          message: "Could not download the file. " + err,
+          message: 'Could not download the file. ' + err,
         });
       }
     });
   },
 };
-

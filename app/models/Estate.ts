@@ -1,6 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn, Unique, ManyToOne } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn, Unique, ManyToOne, OneToMany } from "typeorm";
 import { Customer } from "./Customer";
-
+import { Photo } from "./Photo";
 import { Location } from "./Location";
 import { Manager } from "./Manager";
 
@@ -53,5 +53,8 @@ export class Estate {
   @ManyToOne(() => Manager, (manager) => manager.id)
   @JoinColumn({ name: "manager_id" })
     manager?: Manager;
+
+  @OneToMany(() => Photo, (photo) => photo.estate)
+    photos?: Photo[];
 
 }

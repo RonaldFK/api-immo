@@ -1,5 +1,5 @@
 import multer from 'multer';
-const maxSize = 2 * 1024 * 1024;
+const maxSize = 20 * 1024 * 1024;
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -7,7 +7,7 @@ const storage = multer.diskStorage({
   },
   filename: function (req, file, cb) {
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    cb(null, file.fieldname + '-' + uniqueSuffix);
+    cb(null, uniqueSuffix + '-' + file.originalname);
   }
 
 });
@@ -15,6 +15,6 @@ const storage = multer.diskStorage({
 export const uploadFile = multer({
   storage: storage,
   limits: { fileSize: maxSize }
-}).single("photo");
+}).array("photo");
 
 

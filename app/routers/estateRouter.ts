@@ -3,25 +3,26 @@ export const estateRouter = express.Router();
 
 
 import { estateController } from '../controllers/index';
-
+import { uploadFile } from '../middlewares/uploadFile';
 import {controlSyntaxMiddleware,
   controlUniqData,
 } from '../middlewares/index';
 
 
-estateRouter.route('/estate')
+estateRouter.route('/')
   .get(estateController.getAllEstate)
 
-  .post(
+  .post(uploadFile,
     controlUniqData.uniqueDataControlEstate,
-    estateController.createEstate);
+    estateController.createEstate
+  );
 
-estateRouter.route('/estate/:id')
+estateRouter.route('/:id')
   .get(
     controlSyntaxMiddleware.syntaxIdControl,
     estateController.getOneEstateById)
 
-  .patch(
+  .patch(uploadFile,
     controlSyntaxMiddleware.syntaxIdControl,
     estateController.updateOneEstate)
 
@@ -29,11 +30,11 @@ estateRouter.route('/estate/:id')
     controlSyntaxMiddleware.syntaxIdControl,
     estateController.deleteOneEstate);
 
-estateRouter.get('/estate/type/:type',
+estateRouter.get('/type/:type',
   controlSyntaxMiddleware.syntaxTypeControl,
   estateController.getEstateByType);
 
-estateRouter.get('/estate/:id/:photo',
+estateRouter.get('/:id/photo/:name',
   controlSyntaxMiddleware.syntaxTypeControl,
   estateController.getPhoto);
 
