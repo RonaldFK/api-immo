@@ -446,3 +446,10 @@ VALUES ('bien1-photo1.jpg', 1),
     ('bien10-photo3.jpg', 10),
     ('bien10-photo4.jpg', 10),
     ('bien10-photo5.jpg', 10);
+UPDATE estate
+SET statut = CASE
+        WHEN id BETWEEN 1 AND 3 THEN 'vendu'
+        WHEN id BETWEEN 4 AND 6 THEN 'a_vendre'
+        WHEN id BETWEEN 7 AND 10 THEN 'sous_compromis'
+    END
+WHERE id BETWEEN 1 AND 10;

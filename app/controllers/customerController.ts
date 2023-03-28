@@ -22,7 +22,7 @@ export const customerController = {
     console.log(typeof search);
 
     try{
-      const customer = await dataSource.getRepository(Customer).find({where:{firstname:ILike(`${search}%`)}});
+      const customer = await dataSource.getRepository(Customer).find({where:{lastname:ILike(`${search}%`)}});
       console.log(customer);
 
       customer.length >0 ? res.status(200).json(customer) : res.status(204).send();
