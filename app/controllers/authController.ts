@@ -62,6 +62,7 @@ export const authController = {
 
     const dataToControl = await dataSource.getRepository(Manager).find({where:{login:dataRequest.login}});
 
+
     try {
       const decryptPassword = await bcrypt.compare(
         dataRequest.password,
@@ -73,7 +74,7 @@ export const authController = {
         return res.status(401).json({Information: 'Mot de passe incorrect'});
       }
       const tokenUser = await tokenController.genToken({login:dataToControl[0].login});
-      res.json({Info:'tout est ok',tokenUser});
+      res.json({Info:'tout est ok',tokenUser,userId:dataToControl[0].id});
 
     } catch (err) {
       console.log(err);
