@@ -1,4 +1,5 @@
 import {Request,Response}from 'express';
+import { ILike } from 'typeorm';
 import { dataSource } from '../data/dataSource';
 import { Customer } from '../models/Customer';
 
@@ -10,6 +11,21 @@ export const customerController = {
       const customerList = await dataSource.manager.find(Customer);
       console.table(customerList);
       customerList.length >0 ? res.status(200).json(customerList) : res.status(204).send();
+    }catch(err){
+      console.log(err);
+
+      res.status(500).json(err);
+    }
+  },
+  async searchCustomer (req:Request,res:Response){
+    const search = req.params.name;
+    console.log(typeof search);
+
+    try{
+      const customer = await dataSource.getRepository(Customer).find({where:{lastname:ILike(`${search}%`)}});
+      console.log(customer);
+
+      customer.length >0 ? res.status(200).json(customer) : res.status(204).send();
     }catch(err){
       console.log(err);
 

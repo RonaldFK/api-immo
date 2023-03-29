@@ -36,6 +36,9 @@ export class Estate {
     customer_id?:number;
 
   @Column()
+    statut?:string;
+
+  @Column()
     date_of_selling?:Date;
 
   @OneToOne(() => Location, {cascade:true})

@@ -16,6 +16,10 @@ customerRouter.route('/')
     controlUniqData.uniqueDataControlCustomer,
     customerController.createCustomer);
 
+customerRouter.route('/search/:name')
+  .get(
+    customerController.searchCustomer);
+
 customerRouter.route('/:id')
   .get(
     controlSyntaxMiddleware.syntaxIdControl,
