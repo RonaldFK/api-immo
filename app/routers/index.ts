@@ -8,14 +8,14 @@ import {locationRouter} from './locationRouter';
 import {estateRouter} from './estateRouter';
 import {error404} from '../middlewares/index';
 import { controlToken } from '../middlewares/controlToken';
+import {statisticsRouter} from './statisticsRouter';
 
 
 
-
-
+router.use('/statistics',statisticsRouter);
 router.use('/auth',authRouter);
-router.use(controlToken.validateToken);
 router.use('/estate',estateRouter);
+router.use(controlToken.validateToken);
 router.use('/manager',managerRouter);
 router.use('/customer',customerRouter);
 router.use('/location',locationRouter);

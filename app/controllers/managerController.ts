@@ -1,5 +1,6 @@
 import {Request,Response}from 'express';
 import { dataSource } from '../data/dataSource';
+import { Estate } from '../models/Estate';
 import { Manager } from '../models/Manager';
 
 export const managerController = {
@@ -47,13 +48,14 @@ export const managerController = {
     const {id} = req.params;
 
     try{
-      const estateOfCurrentManager = await dataSource.manager
-        .query(`SELECT distinct e.name as biens
-      FROM manager as m
-      JOIN estate as e
-      ON m.id = e.manager_id
-      WHERE m.id = ${id}
-      order by biens;`);
+      // const estateOfCurrentManager = await dataSource.manager
+      //   .query(`SELECT distinct e.name as biens
+      // FROM manager as m
+      // JOIN estate as e
+      // ON m.id = e.manager_id
+      // WHERE m.id = ${id}
+      // order by biens;`);
+      const estateOfCurrentManager = await dataSource.getRepository(Estate).find({where:{manager_id:Number(id)}});
 
       estateOfCurrentManager.length > 0 ? res.status(200).json(estateOfCurrentManager) : res.status(204).send();
 
