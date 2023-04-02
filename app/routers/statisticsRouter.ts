@@ -4,10 +4,10 @@ export const statisticsRouter = express.Router();
 import {statController} from '../controllers/statController';
 
 statisticsRouter.get('/allEstate',
-  statController.getEstate);
+  statController.getEstateToSell);
 
 statisticsRouter.get('/estateSold',
-  statController.getEstate);
+  statController.getEstateSoldOut);
 
 statisticsRouter.get('/estateMonth',
   statController.getMonth);
