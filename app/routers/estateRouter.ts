@@ -7,7 +7,14 @@ import { uploadFile } from '../middlewares/uploadFile';
 import {controlSyntaxMiddleware,
   controlUniqData,
 } from '../middlewares/index';
+import { controlToken } from '../middlewares/controlToken';
 
+
+estateRouter.get('/:id/photo/:name',
+  controlSyntaxMiddleware.syntaxTypeControl,
+  estateController.getPhoto);
+
+// estateRouter.use(controlToken.validateToken);
 
 estateRouter.route('/')
   .get(estateController.getAllEstate)
@@ -34,8 +41,5 @@ estateRouter.get('/type/:type',
   controlSyntaxMiddleware.syntaxTypeControl,
   estateController.getEstateByType);
 
-estateRouter.get('/:id/photo/:name',
-  controlSyntaxMiddleware.syntaxTypeControl,
-  estateController.getPhoto);
 
 
