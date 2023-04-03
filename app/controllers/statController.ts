@@ -23,7 +23,7 @@ export const statController = {
       if(data){
 
         for (const i of initMonth) {
-          const testing = data.find((elem) => elem.mois === i);
+          const testing = data.find((elem:{mois:number}) => elem.mois === i);
           if (testing) {
             array.push(testing.count);
           } else {
@@ -50,7 +50,7 @@ export const statController = {
       order by Mois`);
 
       for (const i of initMonth) {
-        const testing = data.find((elem) => elem.mois === i);
+        const testing = data.find((elem: { mois: number; }) => elem.mois === i);
         if (testing) {
           array.push(testing.count);
         } else {

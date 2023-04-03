@@ -9,5 +9,4 @@ statisticsRouter.get('/allEstate',
 statisticsRouter.get('/estateSold',
   statController.getEstateSoldOut);
 
-// statisticsRouter.get('/estateMonth',
-//   statController.getMonth);
+
