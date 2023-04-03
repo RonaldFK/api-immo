@@ -9,15 +9,20 @@ import {estateRouter} from './estateRouter';
 import {error404} from '../middlewares/index';
 import { controlToken } from '../middlewares/controlToken';
 import {statisticsRouter} from './statisticsRouter';
+import {tchatRouter} from './tchatRouter';
 
 
+router.use('/tchat',tchatRouter);
 
 router.use('/auth',authRouter);
 router.use('/estate',estateRouter);
-router.use(controlToken.validateToken);
+// router.use(controlToken.validateToken);
 router.use('/statistics',statisticsRouter);
 router.use('/manager',managerRouter);
 router.use('/customer',customerRouter);
 router.use('/location',locationRouter);
 router.use(error404);
+
+
+
 
