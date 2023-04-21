@@ -3,7 +3,7 @@ import { Estate } from '../models/Estate';
 import { uploadFile } from '../middlewares/uploadFile';
 import { Request, Response } from 'express';
 import { Photo } from '../models/Photo';
-
+import {convertPrice} from '../tools/formatPrice';
 export const estateController = {
   /**
    * Récupère la liste complète des Biens
@@ -13,9 +13,13 @@ export const estateController = {
   async getAllEstate(_req: Request, res: Response) {
     try {
       const estateList = await dataSource.manager.find(Estate);
+      estateList.map(elem => {
+        elem.price = convertPrice(elem.price);
+      });
       estateList.length > 0
         ? res.status(200).json(estateList.sort())
         : res.status(204).send();
+
     } catch (err) {
       console.log(err);
       res.status(500).json(err);
@@ -41,6 +45,8 @@ export const estateController = {
             photos: true,
           },
         });
+      estate[0].price = convertPrice(estate[0].price);
+
       estate.length > 0 ? res.status(200).json(estate) : res.status(204).send();
     } catch (err) {
       console.log(err);
