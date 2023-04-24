@@ -1114,7 +1114,9 @@
       "Estate": {
         "required": [
           "name",
-          "photoUrls"
+          "type",
+          "price",
+          "statut"
         ],
         "type": "object",
         "properties": {
@@ -1130,6 +1132,14 @@
           "price": {
             "type": "string",
             "example": "100 000"
+          },
+          "type": {
+            "type": "string",
+            "example": "maison"
+          },
+          "date_of_selling": {
+            "type": "date",
+            "example": "2023-05-02"
           },
           "location_id": {
             "$ref": "#/components/schemas/Location"

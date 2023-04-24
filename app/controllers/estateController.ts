@@ -13,7 +13,15 @@ export const estateController = {
    */
   async getAllEstate(_req: Request, res: Response) {
     try {
-      const estateList = await dataSource.manager.find(Estate);
+      const estateList = await dataSource
+      .getRepository(Estate)
+      .find({
+       
+        relations: {
+   
+          photos: true,
+        },
+      });
       estateList.map(elem => {
         elem?.price = convertPrice(elem?.price);
       });

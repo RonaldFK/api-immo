@@ -19,6 +19,8 @@ export class Estate {
   @Column()
     type!:string;
 
+    @Column()
+      bio!:string;
   @Column()
     created_at!: Date;
 
