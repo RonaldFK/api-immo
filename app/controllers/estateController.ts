@@ -9,12 +9,13 @@ export const estateController = {
    * Récupère la liste complète des Biens
    * @param _req
    * @param res
+   * @returns {Array} Tableau d'objets
    */
   async getAllEstate(_req: Request, res: Response) {
     try {
       const estateList = await dataSource.manager.find(Estate);
       estateList.map(elem => {
-        elem.price = convertPrice(elem.price);
+        elem?.price = convertPrice(elem?.price);
       });
       estateList.length > 0
         ? res.status(200).json(estateList.sort())
@@ -45,7 +46,7 @@ export const estateController = {
             photos: true,
           },
         });
-      estate[0].price = convertPrice(estate[0].price);
+        estate[0]?.price && estate[0].price = convertPrice(estate[0].price);
 
       estate.length > 0 ? res.status(200).json(estate) : res.status(204).send();
     } catch (err) {
@@ -200,7 +201,6 @@ export const estateController = {
     }
   },
   getPhoto(req: Request, res: Response) {
-    console.log('PASSAGE ');
 
     const fileName = req.params.name;
     const directoryPath = 'app/assets/';

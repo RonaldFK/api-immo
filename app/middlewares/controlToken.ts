@@ -10,7 +10,6 @@ export const controlToken = {
 
     let tokenToCheck = req.headers.authorization;
 
-    // uniquement nécessaire pour les tests avec postman
     tokenToCheck = tokenToCheck?.replace('Bearer ','');
 
     try {
