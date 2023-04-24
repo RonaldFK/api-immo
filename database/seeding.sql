@@ -453,3 +453,16 @@ SET statut = CASE
         WHEN id BETWEEN 7 AND 10 THEN 'sous_compromis'
     END
 WHERE id BETWEEN 1 AND 10;
+UPDATE "estate"
+SET "bio" = CASE
+        WHEN "name" = 'Estate 1' THEN 'Cette villa luxueuse est située dans un quartier calme et sécurisé, offrant une vue imprenable sur la mer et les montagnes. Elle dispose de cinq chambres spacieuses avec salle de bains privative, d''un grand salon lumineux, d''une cuisine moderne entièrement équipée et d''une magnifique piscine à débordement.'
+        WHEN "name" = 'Estate 2' THEN 'Ce magnifique penthouse est situé au cœur de la ville, offrant une vue panoramique sur les toits environnants. Il dispose de trois chambres, d''un grand salon avec cheminée, d''une cuisine entièrement équipée et d''une belle terrasse ensoleillée.'
+        WHEN "name" = 'Estate 3' THEN 'Cette charmante maison de campagne est nichée au milieu d''un grand terrain arboré, offrant calme et tranquillité à ses occupants. Elle dispose de quatre chambres, d''un salon avec cheminée, d''une cuisine équipée et d''une piscine privative.'
+        WHEN "name" = 'Estate 4' THEN 'Ce bel appartement situé en front de mer offre une vue imprenable sur l''océan. Il dispose de deux chambres, d''un salon lumineux avec baies vitrées, d''une cuisine ouverte et d''une terrasse spacieuse.'
+        WHEN "name" = 'Estate 5' THEN 'Cette villa moderne et élégante est située dans un quartier résidentiel recherché. Elle dispose de cinq chambres avec salle de bains privative, d''un grand salon lumineux avec accès direct à la terrasse et à la piscine, d''une cuisine équipée et d''une salle de cinéma privée.'
+        WHEN "name" = 'Estate 6' THEN 'Ce charmant chalet en bois est situé au pied des pistes de ski, offrant un accès direct aux remontées mécaniques. Il dispose de trois chambres confortables, d''un salon avec cheminée, d''une cuisine équipée et d''une terrasse avec vue sur les montagnes.'
+        WHEN "name" = 'Estate 7' THEN 'Ce bel immeuble en pierre de taille est situé dans un quartier historique de la ville. Il est composé de plusieurs appartements, chacun avec son charme et son cachet propre. Il offre également une vue imprenable sur la ville depuis sa terrasse sur le toit.'
+        WHEN "name" = 'Estate 8' THEN 'Cette grande propriété est située dans un parc arboré, offrant calme et tranquillité à ses occupants. Elle dispose de sept chambres spacieuses, d''un grand salon lumineux, d''une cuisine équipée et d''une piscine intérieure chauffée.'
+        WHEN "name" = 'Estate 9' THEN 'Ce bel hôtel particulier est situé en plein cœur de la ville, à deux pas des boutiques et des restaurants.'
+        WHEN "name" = 'Estate 10' THEN 'Superbe maison en bord de mer avec vue panoramique sur l''océan. Cette maison moderne dispose de 4 chambres, 3 salles de bains et une grande piscine. Parfait pour les familles ou les vacances entre amis.'
+    END;
