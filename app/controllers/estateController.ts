@@ -4,6 +4,7 @@ import { uploadFile } from '../middlewares/uploadFile';
 import { Request, Response } from 'express';
 import { Photo } from '../models/Photo';
 import {convertPrice} from '../tools/formatPrice';
+import { any, number } from 'joi';
 export const estateController = {
   /**
    * Récupère la liste complète des Biens
@@ -23,7 +24,7 @@ export const estateController = {
         },
       });
       estateList.map(elem => {
-        elem?.price = convertPrice(elem?.price);
+        elem.price = convertPrice(elem?.price);
       });
       estateList.length > 0
         ? res.status(200).json(estateList.sort())
@@ -38,6 +39,7 @@ export const estateController = {
    * Récupère les informations d'un bien en particulier selon l'ID founie.
    * @param req
    * @param res
+   * @returns Un objet unique
    */
   async getOneEstateById(req: Request, res: Response) {
     const id = req.params.id;
@@ -218,7 +220,7 @@ export const estateController = {
 
       if (err) {
         res.status(500).send({
-          message: 'Could not download the file. ' + err,
+          message: 'Impossible de trouver le fichier ' + err,
         });
       }
     });

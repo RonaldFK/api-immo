@@ -3,4 +3,4 @@ export { customerController } from "./customerController";
 export { estateController } from "./estateController";``;
 export {locationController} from "./locationController";
 export {managerController} from "./managerController";
-export { docApiController } from "./docApiController";
+// export { docApiController } from "./docApiController";

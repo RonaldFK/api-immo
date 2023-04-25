@@ -9,12 +9,12 @@ import {estateRouter} from './estateRouter';
 import {error404} from '../middlewares/index';
 import { controlToken } from '../middlewares/controlToken';
 import {statisticsRouter} from './statisticsRouter';
-import {docRouter} from './docRouter';
+// import {docRouter} from './docRouter';
 
 
 router.use('/auth',authRouter);
 router.use('/estate',estateRouter);
-router.use('/docs',docRouter);
+// router.use('/docs',docRouter);
 // router.use(controlToken.validateToken);
 router.use('/statistics',statisticsRouter);
 router.use('/manager',managerRouter);

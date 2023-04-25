@@ -4,6 +4,12 @@ import { dataSource } from '../data/dataSource';
 import { Customer } from '../models/Customer';
 
 export const customerController = {
+  /**
+   * Récupère la liste de tous les clients
+   * @param {*} req
+   * @param {*} res
+   * @returns {Array} // On Retourne tableau d'objet
+   */
   async getAllCustomer (req:Request,res:Response){
     try{
 
@@ -17,6 +23,12 @@ export const customerController = {
       res.status(500).json(err);
     }
   },
+  /**
+   * Cherche une correspondance sur le nom d'un client
+   * @param {*} req
+   * @param {*} res
+   * @returns {Array} // On Retourne tableau d'objet
+   */
   async searchCustomer (req:Request,res:Response){
     const search = req.params.name;
     console.log(typeof search);
@@ -32,6 +44,12 @@ export const customerController = {
       res.status(500).json(err);
     }
   },
+  /**
+   * Récupère les information du client correspondant à l'ID
+   * @param {number} req Id du client
+   * @param {*} res
+   * @returns {Object} // On Retourne un objet avec les informations
+   */
   async getOneCustomerById (req:Request,res:Response) {
     const {id} = req.params;
 
@@ -44,6 +62,12 @@ export const customerController = {
       res.status(500).json(err);
     }
   },
+  /**
+   * Récupère les information du client correspondant à son type
+   * @param {String} req type de clients
+   * @param {*} res
+   * @returns {Object} // On Retourne un objet avec les informations
+   */
   async getOneCustomerByType (req:Request,res:Response) {
     const {type} = req.params;
 
@@ -55,6 +79,13 @@ export const customerController = {
       res.status(500).json(err);
     }
   },
+  /**
+   * Créer un nouveau client
+   * @param {Object} req information du client à créer
+   * @param {*} res
+   * @returns {}  Statut 200 si création ok
+   * @throws Statut 500 si création non ok
+   */
   async createCustomer (req:Request,res:Response) {
     const dataRequest = <typeCustomer>req.body;
 
@@ -77,6 +108,13 @@ export const customerController = {
       res.status(500).json(err);
     }
   },
+  /**
+   * Mise à jour d'un client
+   * @param {Object} req information du client à mettre à jour
+   * @param {*} res
+   * @returns {}  Statut 200 avec les nouvelles informations
+   * @throws Statut 500 avec l'erreur
+   */
   async updateOneCustomer (req:Request,res:Response) {
     const {id} = req.params;
     const dataRequest = <typeCustomer>req.body;
@@ -98,6 +136,13 @@ export const customerController = {
       res.status(500).json(err);
     }
   },
+  /**
+   * Créer un nouveau client
+   * @param {} req Id du client
+   * @param {*} res
+   * @returns {}  Statut 200 ou indication de la non correspondance
+   * @throws Statut 500 si création non ok
+   */
   async deleteOneCustomer (req:Request,res:Response) {
     const {id} = req.params;
 

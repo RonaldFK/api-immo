@@ -5,20 +5,20 @@ import { Manager } from '../models/Manager';
 import { dataSource } from '../data/dataSource';
 import { tokenController } from './tokenController';
 
-// import transporter from '../dataValidation/nodeMailer';
+
 const saltRounds = 10;
 
 export const authController = {
   /**
-   *
+   * Function de création de compte
    * @param {*} req // Récupère les infos de création de compte.
-   * @param {*} res // Renvoie ma page
-   * @returns // On bloque le processus en cas de mauvais login ou password.
+   * @param {*} res // Renvoie message de confirmation ou erreur
+   * @returns // On Retourne un statut 200 si le process ok
    */
   async signupAccount (req:Request, res:Response) {
 
     const dataRequest = <typeManager>req.body;
-    // récupération du retour de la validation
+    // Vérification format de données avec Joi
     const verif = schema.validate({
       firstname:dataRequest.firstname,
       lastname:dataRequest.lastname,

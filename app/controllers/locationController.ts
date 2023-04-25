@@ -54,6 +54,13 @@ export const locationController = {
     const returnResult = await dataSource.getRepository(Location).find({where:{id:dataToInsert.raw[0].id}});
     res.status(200).json(returnResult);
   },
+  /**
+   * Met à jour une localisation
+   * @param {} req Id de la localisation
+   * @param {*} res
+   * @returns {}  Statut 200 avec nouvelles informations
+   * @throws Statut 500
+   */
   async updateOneLocation (req:Request,res:Response) {
     const id = req.params.id;
     const dataRequest = <typeLocation>req.body;
@@ -75,6 +82,13 @@ export const locationController = {
       res.status(500).json(err);
     }
   },
+  /**
+   * Supression d'une localisation
+   * @param {} req Id de la localisation
+   * @param {*} res
+   * @returns {}  Statut 200
+   * @throws Statut 500
+   */
   async deleteOneLocation(req:Request,res:Response){
     const id = req.params.id;
 
