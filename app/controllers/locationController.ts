@@ -10,6 +10,8 @@ export const locationController = {
    * @param res
    */
   async getAllLocation (req:Request,res:Response) {
+    console.log('location');
+
     try{
       const locationList = await dataSource.manager.find(Location);
       locationList.length > 0 ? res.status(200).json(locationList) : res.status(204).send();
@@ -38,39 +40,36 @@ export const locationController = {
    * @param res
    */
   async createLocation (req:Request,res:Response){
-    const dataRequest:typeLocation = req.body;
+    const dataRequest = <typeLocation>req.body;
 
     const dataToInsert = await dataSource
       .createQueryBuilder()
       .insert()
       .into(Location)
       .values(
-        { num:dataRequest.num,
-          street: dataRequest.street,
-          city: dataRequest.city ,
-          country:dataRequest.country,
-          code:dataRequest.code
-        }
+        dataRequest
       )
       .execute();
 
     const returnResult = await dataSource.getRepository(Location).find({where:{id:dataToInsert.raw[0].id}});
     res.status(200).json(returnResult);
   },
+  /**
+   * Met à jour une localisation
+   * @param {} req Id de la localisation
+   * @param {*} res
+   * @returns {}  Statut 200 avec nouvelles informations
+   * @throws Statut 500
+   */
   async updateOneLocation (req:Request,res:Response) {
     const id = req.params.id;
-    const dataRequest:typeLocation = req.body;
+    const dataRequest = <typeLocation>req.body;
 
     try{
       await dataSource
         .createQueryBuilder()
         .update(Location)
-        .set({ num: dataRequest.num,
-          street: dataRequest.street ,
-          city:dataRequest.city,
-          country:dataRequest.country,
-          code:dataRequest.code
-        })
+        .set(dataRequest)
         .where( { id: id })
         .execute();
 
@@ -83,6 +82,13 @@ export const locationController = {
       res.status(500).json(err);
     }
   },
+  /**
+   * Supression d'une localisation
+   * @param {} req Id de la localisation
+   * @param {*} res
+   * @returns {}  Statut 200
+   * @throws Statut 500
+   */
   async deleteOneLocation(req:Request,res:Response){
     const id = req.params.id;
 

@@ -15,14 +15,20 @@ dataSource.initialize()
   .catch((err) => {
     console.error("Error during Data Source initialization", err);
   });
-
-
 //
-const allowedOrigins = ['http://localhost:8080'];
+// swagger
+import swaggerUi from "swagger-ui-express";
+import * as swaggerDocument from './doc/swagger.json';
 
+app.use('/test', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+//
+// Cors
+const allowedOrigins = ['http://localhost:8080'];
 const options: cors.CorsOptions = {
   origin: allowedOrigins
 };
+//
+
 app.use(cors(options));
 app.use(express.json());
 app.use(router);

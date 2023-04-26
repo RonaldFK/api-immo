@@ -10,6 +10,7 @@ export const controlSyntaxMiddleware = {
      */
   syntaxIdControl (req:Request, res:Response, next:NextFunction){
     const id = req.params.id;
+    console.log(req.params);
 
     const regexNumber = /^[0-9]*$/g;
     const testRegexNumber = regexNumber.test(id);

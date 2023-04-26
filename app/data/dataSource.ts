@@ -4,6 +4,7 @@ import { Location } from "../models/Location";
 import 'dotenv/config';
 import { Manager } from "../models/Manager";
 import { Customer } from "../models/Customer";
+import { Photo } from "../models/Photo";
 
 
 export const dataSource = new DataSource({
@@ -13,7 +14,7 @@ export const dataSource = new DataSource({
   username: process.env.PGUSER,
   password: process.env.PGPASSWORD,
   database: process.env.PGDATABASE,
-  entities: [Estate,Location,Manager,Customer],
+  entities: [Estate,Location,Manager,Customer,Photo],
 });
 
 

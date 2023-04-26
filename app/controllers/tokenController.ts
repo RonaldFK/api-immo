@@ -16,7 +16,7 @@ export const tokenController = {
     const token = await jwt.sign({
 
       data: {obj}
-    }, process.env.JWT_KEY || 'secret', { expiresIn: 240 });
+    }, process.env.JWT_KEY || 'secret', { expiresIn: '2h' });
     try {
       return {token:token};
 

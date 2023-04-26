@@ -1,6 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn, Unique, ManyToOne } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn, Unique, ManyToOne, OneToMany } from "typeorm";
 import { Customer } from "./Customer";
-
+import { Photo } from "./Photo";
 import { Location } from "./Location";
 import { Manager } from "./Manager";
 
@@ -19,6 +19,8 @@ export class Estate {
   @Column()
     type!:string;
 
+    @Column()
+      bio!:string;
   @Column()
     created_at!: Date;
 
@@ -34,6 +36,9 @@ export class Estate {
 
   @Column()
     customer_id?:number;
+
+  @Column()
+    statut?:string;
 
   @Column()
     date_of_selling?:Date;
@@ -53,5 +58,8 @@ export class Estate {
   @ManyToOne(() => Manager, (manager) => manager.id)
   @JoinColumn({ name: "manager_id" })
     manager?: Manager;
+
+  @OneToMany(() => Photo, (photo) => photo.estate)
+    photos?: Photo[];
 
 }

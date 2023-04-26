@@ -1,8 +1,16 @@
 import {Request,Response}from 'express';
 import { dataSource } from '../data/dataSource';
+import { Estate } from '../models/Estate';
 import { Manager } from '../models/Manager';
 
 export const managerController = {
+  /**
+   * Récupère la liste complète des managers
+   * @param {} req
+   * @param {*} res
+   * @returns {Array}  Statut 200 avec un tableau d'objets
+   * @throws Statut 500
+   */
   async getAllManager (req:Request,res:Response){
     try{
 
@@ -15,25 +23,18 @@ export const managerController = {
       res.status(500).json(err);
     }
   },
+  /**
+   * Récupère les informations d'un manager par son Id
+   * @param {} req Id du manager
+   * @param {*} res
+   * @returns {}  Statut 200
+   * @throws Statut 500
+   */
   async getOneManagerById (req:Request,res:Response) {
     const {id} = req.params;
 
     try{
       const manager = await dataSource.getRepository(Manager).find({where:{id:Number(id)}});
-
-
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars, prefer-const, prefer-const, prefer-const
-      // let formatManagerDataToSend = [];
-      // // eslint-disable-next-line prefer-const
-      // let format: {[key: number]: string} ={};
-
-      // for (let i = 0; i < manager.length; i++) {
-      //   format = manager[i].bien;
-      // }
-      // formatManagerDataToSend.push(format);
-      // manager.push(formatManagerDataToSend);
-      // // console.log(newo);
-
 
       manager.length > 0 ? res.status(200).json(manager) : res.status(204).send();
 
@@ -43,18 +44,19 @@ export const managerController = {
       res.status(500).json(err);
     }
   },
+  /**
+   * Récupère la liste des biens géré par le mananger correspondant à l'ID
+   * @param {} req Id de la localisation
+   * @param {*} res
+   * @returns {}  Statut 200
+   * @throws Statut 500
+   */
   async getEstateByManager (req:Request,res:Response) {
     const {id} = req.params;
 
     try{
-      const estateOfCurrentManager = await dataSource.manager
-        .query(`SELECT distinct e.name as biens
-      FROM manager as m
-      JOIN estate as e
-      ON m.id = e.manager_id
-      WHERE m.id = ${id}
-      order by biens;`);
 
+      const estateOfCurrentManager = await dataSource.getRepository(Estate).find({where:{manager_id:Number(id)}});
 
       estateOfCurrentManager.length > 0 ? res.status(200).json(estateOfCurrentManager) : res.status(204).send();
 
@@ -64,49 +66,50 @@ export const managerController = {
       res.status(500).json(err);
     }
   },
-  async createManager (req:Request,res:Response) {
-    const dataRequest:typeManager = req.body;
+  // async createManager (req:Request,res:Response) {
+  //   const dataRequest:typeManager = req.body;
 
-    try{
-      const dataToInsert = await dataSource
-        .createQueryBuilder()
-        .insert()
-        .into(Manager)
-        .values(
-          {
-            firstname: dataRequest.firstname ,
-            lastname:dataRequest.lastname,
-            password:dataRequest.password,
-            login:dataRequest.login,
-            email:dataRequest.email
-          }
-        )
-        .execute();
+  //   try{
+  //     const dataToInsert = await dataSource
+  //       .createQueryBuilder()
+  //       .insert()
+  //       .into(Manager)
+  //       .values(
+  //         {
+  //           firstname: dataRequest.firstname ,
+  //           lastname:dataRequest.lastname,
+  //           password:dataRequest.password,
+  //           login:dataRequest.login,
+  //           email:dataRequest.email
+  //         }
+  //       )
+  //       .execute();
 
-      const returnResult = await dataSource.getRepository(Manager).find({where:{id:dataToInsert.raw[0].id}});
-      console.table(returnResult);
-      res.status(200).json(returnResult);
-    } catch(err){
-      console.log(err);
+  //     const returnResult = await dataSource.getRepository(Manager).find({where:{id:dataToInsert.raw[0].id}});
+  //     console.table(returnResult);
+  //     res.status(200).json(returnResult);
+  //   } catch(err){
+  //     console.log(err);
 
-      res.status(500).json(err);
-    }
-  },
+  //     res.status(500).json(err);
+  //   }
+  // },
+  /**
+   * Mettre à jour les informations d'un manager
+   * @param {} req Id du manager
+   * @param {*} res
+   * @returns {}  Statut 200 avec nouvelles informations
+   * @throws Statut 500
+   */
   async updateOneManager (req:Request,res:Response) {
     const {id} = req.params;
-    const dataRequest:typeManager = req.body;
+    const dataRequest = <typeManager>req.body;
 
     try{
       await dataSource
         .createQueryBuilder()
         .update(Manager)
-        .set({
-          firstname: dataRequest.firstname ,
-          lastname:dataRequest.lastname,
-          password:dataRequest.password,
-          login:dataRequest.login,
-          email:dataRequest.email
-        })
+        .set(dataRequest)
         .where( { id: id })
         .execute();
 
@@ -119,6 +122,13 @@ export const managerController = {
       res.status(500).json(err);
     }
   },
+  /**
+   * Supression d'un manager
+   * @param {} req Id du manager
+   * @param {*} res
+   * @returns {}  Statut 200
+   * @throws Statut 500
+   */
   async deleteOneManager (req:Request,res:Response) {
     const {id} = req.params;
 
