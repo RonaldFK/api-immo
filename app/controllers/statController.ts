@@ -8,7 +8,7 @@ const initMonth = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
 export const statController = {
   /**
-   * Récupère lnom de bien en vente par mois
+   * Récupère le nom des biens en vente par mois
    * @param _req
    * @param res
    */
@@ -20,8 +20,11 @@ export const statController = {
       const data = await dataSource.manager.query(`select distinct  date_part('month', created_at) as Mois,count(id) from estate
       group by date_part('month', created_at)
       order by Mois`);
-      if(data){
 
+      if(data){
+        // Je boucle en faisant un find sur chaque données pour trouver une correspondance.
+        // je peux avoir des ventes sur des mois aléatoire.
+        // (1 = Janvier) - si correspondance 1 et 1 , j'ajoute le nombre de bien à mon tableau
         for (const i of initMonth) {
           const testing = data.find((elem:{mois:number}) => elem.mois === i);
           if (testing) {
@@ -41,6 +44,11 @@ export const statController = {
       res.status(500).json(err);
     }
   },
+  /**
+   * Récupère le nom des biens vendus par mois
+   * @param _req
+   * @param res
+   */
   async getEstateSoldOut(_req: Request, res: Response) {
     const array : string[] = [];
     try {

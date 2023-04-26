@@ -4,6 +4,13 @@ import { Estate } from '../models/Estate';
 import { Manager } from '../models/Manager';
 
 export const managerController = {
+  /**
+   * Récupère la liste complète des managers
+   * @param {} req
+   * @param {*} res
+   * @returns {Array}  Statut 200 avec un tableau d'objets
+   * @throws Statut 500
+   */
   async getAllManager (req:Request,res:Response){
     try{
 
@@ -16,25 +23,18 @@ export const managerController = {
       res.status(500).json(err);
     }
   },
+  /**
+   * Récupère les informations d'un manager par son Id
+   * @param {} req Id du manager
+   * @param {*} res
+   * @returns {}  Statut 200
+   * @throws Statut 500
+   */
   async getOneManagerById (req:Request,res:Response) {
     const {id} = req.params;
 
     try{
       const manager = await dataSource.getRepository(Manager).find({where:{id:Number(id)}});
-
-
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars, prefer-const, prefer-const, prefer-const
-      // let formatManagerDataToSend = [];
-      // // eslint-disable-next-line prefer-const
-      // let format: {[key: number]: string} ={};
-
-      // for (let i = 0; i < manager.length; i++) {
-      //   format = manager[i].bien;
-      // }
-      // formatManagerDataToSend.push(format);
-      // manager.push(formatManagerDataToSend);
-      // // console.log(newo);
-
 
       manager.length > 0 ? res.status(200).json(manager) : res.status(204).send();
 
@@ -44,6 +44,13 @@ export const managerController = {
       res.status(500).json(err);
     }
   },
+  /**
+   * Récupère la liste des biens géré par le mananger correspondant à l'ID
+   * @param {} req Id de la localisation
+   * @param {*} res
+   * @returns {}  Statut 200
+   * @throws Statut 500
+   */
   async getEstateByManager (req:Request,res:Response) {
     const {id} = req.params;
 
@@ -87,6 +94,13 @@ export const managerController = {
   //     res.status(500).json(err);
   //   }
   // },
+  /**
+   * Mettre à jour les informations d'un manager
+   * @param {} req Id du manager
+   * @param {*} res
+   * @returns {}  Statut 200 avec nouvelles informations
+   * @throws Statut 500
+   */
   async updateOneManager (req:Request,res:Response) {
     const {id} = req.params;
     const dataRequest = <typeManager>req.body;
@@ -108,6 +122,13 @@ export const managerController = {
       res.status(500).json(err);
     }
   },
+  /**
+   * Supression d'un manager
+   * @param {} req Id du manager
+   * @param {*} res
+   * @returns {}  Statut 200
+   * @throws Statut 500
+   */
   async deleteOneManager (req:Request,res:Response) {
     const {id} = req.params;
 

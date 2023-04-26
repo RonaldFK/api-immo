@@ -4,17 +4,27 @@ import { uploadFile } from '../middlewares/uploadFile';
 import { Request, Response } from 'express';
 import { Photo } from '../models/Photo';
 import {convertPrice} from '../tools/formatPrice';
+import { any, number } from 'joi';
 export const estateController = {
   /**
    * Récupère la liste complète des Biens
    * @param _req
    * @param res
+   * @returns {Array} Tableau d'objets
    */
   async getAllEstate(_req: Request, res: Response) {
     try {
-      const estateList = await dataSource.manager.find(Estate);
+      const estateList = await dataSource
+      .getRepository(Estate)
+      .find({
+       
+        relations: {
+   
+          photos: true,
+        },
+      });
       estateList.map(elem => {
-        elem.price = convertPrice(elem.price);
+        elem.price = convertPrice(elem?.price);
       });
       estateList.length > 0
         ? res.status(200).json(estateList.sort())
@@ -29,6 +39,7 @@ export const estateController = {
    * Récupère les informations d'un bien en particulier selon l'ID founie.
    * @param req
    * @param res
+   * @returns Un objet unique
    */
   async getOneEstateById(req: Request, res: Response) {
     const id = req.params.id;
@@ -45,7 +56,7 @@ export const estateController = {
             photos: true,
           },
         });
-      estate[0].price = convertPrice(estate[0].price);
+        estate[0]?.price && estate[0].price = convertPrice(estate[0].price);
 
       estate.length > 0 ? res.status(200).json(estate) : res.status(204).send();
     } catch (err) {
@@ -200,7 +211,6 @@ export const estateController = {
     }
   },
   getPhoto(req: Request, res: Response) {
-    console.log('PASSAGE ');
 
     const fileName = req.params.name;
     const directoryPath = 'app/assets/';
@@ -210,7 +220,7 @@ export const estateController = {
 
       if (err) {
         res.status(500).send({
-          message: 'Could not download the file. ' + err,
+          message: 'Impossible de trouver le fichier ' + err,
         });
       }
     });
