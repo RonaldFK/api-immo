@@ -18,7 +18,7 @@ dataSource.initialize()
 //
 // swagger
 import swaggerUi from "swagger-ui-express";
-import * as swaggerDocument from './swagger.json';
+import * as swaggerDocument from './doc/swagger.json';
 
 app.use('/test', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 //
